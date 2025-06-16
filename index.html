@@ -322,7 +322,7 @@
         <div class="header">
             <h1>中考倒计时</h1>
             <p class="subtitle">向着目标奋力前行，胜利就在前方！</p>
-            <div class="target-date">目标日期：2025年6月19日</div>
+            <div class="target-date">中考开始日期：2025年6月19日</div>
         </div>
         
         <div class="progress-container">
@@ -384,7 +384,7 @@
             const progressPercent = Math.min(100, (timePassed / totalDuration) * 100);
             progressBar.style.width = `${progressPercent}%`;
             progressText.textContent = `已过去 ${Math.round(progressPercent)}% 的时间`;
-            
+            progressText.textContent = `已过去 99.99% 的时间`;
             // 如果考试日期已过
             if (timeLeft < 0) {
                 countdownContainer.style.display = 'none';
