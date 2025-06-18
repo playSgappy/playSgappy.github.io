@@ -411,7 +411,6 @@
             const progressPercent = Math.min(100, (timePassed / totalDuration) * 100);
             progressBar.style.width = `${progressPercent}%`;
             progressText.textContent = `已过去 ${Math.round(progressPercent)}% 的时间`;
-            progressText.textContent = `已过去 99.99% 的时间`;
             // 如果考试日期已过
             if (timeLeft < 0) {
                 countdownContainer.style.display = 'none';
