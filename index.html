@@ -541,6 +541,7 @@
             </div>
         </div>
         <div class="datetime" id="currentDateTime"></div>
+        <button class="disclaimer-btn" id="disclaimerBtn">免责声明</button>
     </div>
     
     <div class="container">
@@ -555,8 +556,8 @@
             <div class="info-box">
                 <h3><i class="fas fa-info-circle"></i> 重要提示</h3>
                 <div class="info-content">
-                    <p><i class="fas fa-check-circle"></i> 成绩查询时间：2025年7月10日 08:00 - 7月20日 18:00</p>
-                    <p><i class="fas fa-check-circle"></i> 请准备好您的准考证号、考生号和身份证号进行查询</p>
+                    <p><i class="fas fa-check-circle"></i> 成绩查询时间：2025年6月24日 08:00 - 7月8日 18:00</p>
+                    <p><i class="fas fa-check-circle"></i> 请准备好您的准考证号、考生号进行查询</p>
                     <p><i class="fas fa-check-circle"></i> 对成绩有异议的考生，可在7月12日前向毕业学校提出复核申请</p>
                     <p><i class="fas fa-check-circle"></i> 漳州市普通高中招生录取工作将于7月15日开始</p>
                     <p><i class="fas fa-check-circle"></i> 成绩折算规则：语文、数学、英语×100%；物理×90%；化学×60%；政治、历史×50%；生物、地理×30%；体育×100%</p>
@@ -733,10 +734,10 @@
                 // 计算等级 (基于原始分)
                 let grade = 'A';
                 const percentage = rawScore / subject.fullScore;
-                if (percentage < 0.6) grade = 'E';
-                else if (percentage < 0.7) grade = 'D';
-                else if (percentage < 0.8) grade = 'C';
-                else if (percentage < 0.9) grade = 'B';
+                if (percentage < 0.05) grade = 'E';
+                else if (percentage < 0.20) grade = 'D';
+                else if (percentage < 0.55) grade = 'C';
+                else if (percentage < 0.85) grade = 'B';
                 else grade = 'A';
                 
                 scores.push({
@@ -755,13 +756,13 @@
         // 根据折算总分生成分析
         function generateAnalysis(totalConvertedScore) {
             if (totalConvertedScore >= 800) {
-                return `该考生折算总分${totalConvertedScore}分（满分710分），位列全市前1%，各科成绩优异，表现出色，有望进入漳州一中重点班。`;
+                return `该考生折算总分${totalConvertedScore}分（满分710分），位列全市前1%，各科成绩优异，表现出色，有望进入云霄一中科教班。`;
             } else if (totalConvertedScore >= 700) {
-                return `该考生折算总分${totalConvertedScore}分（满分710分），成绩优秀，位列全市前5%，各科发展均衡，可报考漳州重点高中。`;
+                return `该考生折算总分${totalConvertedScore}分（满分710分），成绩优秀，位列全市前5%，各科发展均衡，可报考云霄一中。`;
             } else if (totalConvertedScore >= 600) {
-                return `该考生折算总分${totalConvertedScore}分（满分710分），成绩良好，达到市级示范高中录取线，有望被漳州三中录取。`;
+                return `该考生折算总分${totalConvertedScore}分（满分710分），成绩良好`;
             } else if (totalConvertedScore >= 500) {
-                return `该考生折算总分${totalConvertedScore}分（满分710分），成绩中等，达到普通高中录取线，建议报考漳州五中或六中。`;
+                return `该考生折算总分${totalConvertedScore}分（满分710分），成绩中等`;
             } else {
                 return `该考生折算总分${totalConvertedScore}分（满分710分），成绩有待提高，建议考虑职业高中或中专学校，部分科目有明显提升空间。`;
             }
@@ -790,9 +791,8 @@
             totalRow.className = 'total-row';
             totalRow.innerHTML = `
                 <td>总分</td>
-                <td>${totalRawScore}</td>
+                <td>/</td>
                 <td>${totalConvertedScore}</td>
-                <td colspan="2">折算总分: ${totalConvertedScore} / 710</td>
             `;
             tableBody.appendChild(totalRow);
             
@@ -848,14 +848,7 @@
             
             // 随机生成学校
             const schools = [
-                '漳州第一中学初中部', 
-                '漳州第三中学初中部', 
-                '漳州第五中学初中部',
-                '漳州实验中学',
-                '漳州立人学校',
-                '漳州正兴学校',
-                '漳州八中初中部',
-                '漳州二中初中部'
+                '云霄实验中学', 
             ];
             document.getElementById('school').textContent = schools[Math.floor(Math.random() * schools.length)];
             
