@@ -755,15 +755,15 @@
         // 根据折算总分生成分析
         function generateAnalysis(totalConvertedScore) {
             if (totalConvertedScore >= 800) {
-                return `该考生折算总分${totalConvertedScore}分（满分710分），位列全市前1%，各科成绩优异，表现出色，有望进入云霄一中科教班。`;
+                return `该考生折算总分${totalConvertedScore}分（满分800分），位列全市前1%，各科成绩优异，表现出色，有望进入云霄一中科教班。`;
             } else if (totalConvertedScore >= 700) {
-                return `该考生折算总分${totalConvertedScore}分（满分710分），成绩优秀，位列全市前5%，各科发展均衡，可报考云霄一中。`;
+                return `该考生折算总分${totalConvertedScore}分（满分800分），成绩优秀，位列全市前5%，各科发展均衡，可报考云霄一中。`;
             } else if (totalConvertedScore >= 600) {
-                return `该考生折算总分${totalConvertedScore}分（满分710分），成绩良好`;
+                return `该考生折算总分${totalConvertedScore}分（满分800分），成绩良好`;
             } else if (totalConvertedScore >= 500) {
-                return `该考生折算总分${totalConvertedScore}分（满分710分），成绩中等`;
+                return `该考生折算总分${totalConvertedScore}分（满分800分），成绩中等`;
             } else {
-                return `该考生折算总分${totalConvertedScore}分（满分710分），成绩有待提高，建议考虑职业高中或中专学校，部分科目有明显提升空间。`;
+                return `该考生折算总分${totalConvertedScore}分（满分800分），成绩有待提高，建议考虑职业高中或中专学校，部分科目有明显提升空间。`;
             }
         }
         
