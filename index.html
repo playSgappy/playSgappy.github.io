@@ -367,6 +367,69 @@
             z-index: 0;
         }
         
+        .captcha-container {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .captcha-input {
+            flex: 1;
+        }
+        
+        .captcha-code {
+            background: #e0e0e0;
+            border-radius: 5px;
+            width: 120px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #333;
+            user-select: none;
+            cursor: pointer;
+            font-size: 20px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .message {
+            display: none;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+        }
+        
+        .success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+        
+        .analysis-box {
+            margin-top: 25px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .analysis-title {
+            color: #0d47a1;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
         @media (max-width: 768px) {
             .title {
                 font-size: 24px;
@@ -430,22 +493,23 @@
             
             <div class="form-container">
                 <h3 class="form-title"><i class="fas fa-search"></i> 成绩查询</h3>
+                <div class="message error" id="errorMessage"></div>
                 <form id="scoreForm">
                     <div class="form-group">
                         <label for="examId"><i class="fas fa-ticket-alt"></i> 准考证号</label>
-                        <input type="text" id="examId" class="form-control" placeholder="请输入14位准考证号" required>
+                        <input type="text" id="examId" class="form-control" placeholder="请输入14位准考证号" maxlength="14">
                     </div>
                     
                     <div class="form-group">
                         <label for="idCard"><i class="fas fa-id-card"></i> 身份证号</label>
-                        <input type="text" id="idCard" class="form-control" placeholder="请输入18位身份证号" required>
+                        <input type="text" id="idCard" class="form-control" placeholder="请输入18位身份证号" maxlength="18">
                     </div>
                     
                     <div class="form-group">
                         <label for="verifyCode"><i class="fas fa-shield-alt"></i> 验证码</label>
-                        <div style="display: flex; gap: 10px;">
-                            <input type="text" id="verifyCode" class="form-control" placeholder="请输入右侧验证码" style="flex: 1;" required>
-                            <div style="background: #e0e0e0; border-radius: 5px; width: 120px; height: 45px; display: flex; justify-content: center; align-items: center; font-weight: bold; letter-spacing: 2px; color: #333; user-select: none;">A3F7</div>
+                        <div class="captcha-container">
+                            <input type="text" id="verifyCode" class="form-control captcha-input" placeholder="请输入右侧验证码">
+                            <div class="captcha-code" id="captchaCode">A3F7</div>
                         </div>
                     </div>
                     
@@ -471,7 +535,7 @@
                     </div>
                 </div>
                 
-                <table class="score-table">
+                <table class="score-table" id="scoreTable">
                     <thead>
                         <tr>
                             <th>考试科目</th>
@@ -481,76 +545,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>语文</td>
-                            <td>138</td>
-                            <td>A+</td>
-                            <td>150</td>
-                        </tr>
-                        <tr>
-                            <td>数学</td>
-                            <td>142</td>
-                            <td>A+</td>
-                            <td>150</td>
-                        </tr>
-                        <tr>
-                            <td>英语</td>
-                            <td>146</td>
-                            <td>A+</td>
-                            <td>150</td>
-                        </tr>
-                        <tr>
-                            <td>物理</td>
-                            <td>94</td>
-                            <td>A</td>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>化学</td>
-                            <td>96</td>
-                            <td>A</td>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>道德与法治</td>
-                            <td>92</td>
-                            <td>A</td>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>历史</td>
-                            <td>95</td>
-                            <td>A</td>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>地理</td>
-                            <td>98</td>
-                            <td>A+</td>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>生物</td>
-                            <td>97</td>
-                            <td>A+</td>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>体育与健康</td>
-                            <td>38</td>
-                            <td>A+</td>
-                            <td>40</td>
-                        </tr>
-                        <tr class="total-row">
-                            <td>总分</td>
-                            <td colspan="3">983</td>
-                        </tr>
+                        <!-- 成绩将由JavaScript动态生成 -->
                     </tbody>
                 </table>
                 
-                <div style="margin-top: 25px; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);">
-                    <p style="color: #0d47a1; font-weight: bold; margin-bottom: 10px;"><i class="fas fa-medal"></i> 成绩分析：</p>
-                    <p>该考生总分位列全市前1.5%，各科成绩均衡发展，其中英语、数学、地理、生物表现尤为突出。</p>
+                <div class="analysis-box">
+                    <p class="analysis-title"><i class="fas fa-medal"></i> 成绩分析：</p>
+                    <p id="scoreAnalysis">该考生总分位列全市前1.5%，各科成绩均衡发展，其中英语、数学、地理、生物表现尤为突出。</p>
                 </div>
             </div>
         </div>
@@ -585,10 +586,110 @@
             document.getElementById('currentDateTime').textContent = now.toLocaleDateString('zh-CN', options);
         }
         
-        // 初始更新时间
-        updateDateTime();
-        // 每秒更新一次时间
-        setInterval(updateDateTime, 1000);
+        // 生成随机验证码
+        function generateCaptcha() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let captcha = '';
+            for (let i = 0; i < 4; i++) {
+                captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return captcha;
+        }
+        
+        // 更新验证码
+        function updateCaptcha() {
+            const captchaCode = document.getElementById('captchaCode');
+            captchaCode.textContent = generateCaptcha();
+        }
+        
+        // 生成随机成绩
+        function generateRandomScores() {
+            const subjects = [
+                { name: '语文', fullScore: 150, minScore: 90 },
+                { name: '数学', fullScore: 150, minScore: 90 },
+                { name: '英语', fullScore: 150, minScore: 90 },
+                { name: '物理', fullScore: 100, minScore: 60 },
+                { name: '化学', fullScore: 100, minScore: 60 },
+                { name: '道德与法治', fullScore: 100, minScore: 60 },
+                { name: '历史', fullScore: 100, minScore: 60 },
+                { name: '地理', fullScore: 100, minScore: 60 },
+                { name: '生物', fullScore: 100, minScore: 60 },
+                { name: '体育与健康', fullScore: 40, minScore: 24 }
+            ];
+            
+            let totalScore = 0;
+            let scores = [];
+            
+            subjects.forEach(subject => {
+                // 在及格分和满分之间生成随机分数
+                const score = Math.floor(Math.random() * (subject.fullScore - subject.minScore + 1)) + subject.minScore;
+                totalScore += score;
+                
+                // 简单计算等级
+                let grade = 'A+';
+                const percentage = score / subject.fullScore;
+                if (percentage < 0.6) grade = 'D';
+                else if (percentage < 0.7) grade = 'C';
+                else if (percentage < 0.8) grade = 'B';
+                else if (percentage < 0.9) grade = 'B+';
+                else if (percentage < 0.95) grade = 'A';
+                else grade = 'A+';
+                
+                scores.push({
+                    name: subject.name,
+                    score: score,
+                    grade: grade,
+                    fullScore: subject.fullScore
+                });
+            });
+            
+            return { scores, totalScore };
+        }
+        
+        // 根据总分生成分析
+        function generateAnalysis(totalScore) {
+            if (totalScore >= 950) {
+                return `该考生总分${totalScore}分（满分1040分），位列全市前1%，各科成绩优异，表现出色，有望进入漳州一中重点班。`;
+            } else if (totalScore >= 900) {
+                return `该考生总分${totalScore}分（满分1040分），成绩优秀，位列全市前5%，各科发展均衡，可报考漳州重点高中。`;
+            } else if (totalScore >= 800) {
+                return `该考生总分${totalScore}分（满分1040分），成绩良好，达到市级示范高中录取线，有望被漳州三中录取。`;
+            } else if (totalScore >= 700) {
+                return `该考生总分${totalScore}分（满分1040分），成绩中等，达到普通高中录取线，建议报考漳州五中或六中。`;
+            } else {
+                return `该考生总分${totalScore}分（满分1040分），成绩有待提高，建议考虑职业高中或中专学校，部分科目有明显提升空间。`;
+            }
+        }
+        
+        // 显示成绩
+        function displayScores() {
+            const { scores, totalScore } = generateRandomScores();
+            const tableBody = document.querySelector('#scoreTable tbody');
+            tableBody.innerHTML = '';
+            
+            scores.forEach(subject => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${subject.name}</td>
+                    <td>${subject.score}</td>
+                    <td>${subject.grade}</td>
+                    <td>${subject.fullScore}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+            
+            // 添加总分行
+            const totalRow = document.createElement('tr');
+            totalRow.className = 'total-row';
+            totalRow.innerHTML = `
+                <td>总分</td>
+                <td colspan="3">${totalScore}</td>
+            `;
+            tableBody.appendChild(totalRow);
+            
+            // 更新成绩分析
+            document.getElementById('scoreAnalysis').textContent = generateAnalysis(totalScore);
+        }
         
         // 表单提交处理
         document.getElementById('scoreForm').addEventListener('submit', function(e) {
@@ -597,17 +698,64 @@
             // 获取输入值
             const examId = document.getElementById('examId').value;
             const idCard = document.getElementById('idCard').value;
+            const verifyCode = document.getElementById('verifyCode').value;
+            const captchaCode = document.getElementById('captchaCode').textContent;
+            const errorMessage = document.getElementById('errorMessage');
             
-            // 简单验证
-            if(examId.length !== 14) {
-                alert('准考证号应为14位数字');
+            // 隐藏错误信息
+            errorMessage.style.display = 'none';
+            
+            // 验证输入
+            if (!examId || !idCard || !verifyCode) {
+                errorMessage.textContent = '请填写完整的查询信息！';
+                errorMessage.style.display = 'block';
                 return;
             }
             
-            if(idCard.length !== 18) {
-                alert('身份证号应为18位');
+            if (examId.length !== 14) {
+                errorMessage.textContent = '准考证号应为14位数字！';
+                errorMessage.style.display = 'block';
                 return;
             }
+            
+            if (idCard.length !== 18) {
+                errorMessage.textContent = '身份证号应为18位！';
+                errorMessage.style.display = 'block';
+                return;
+            }
+            
+            if (verifyCode.toUpperCase() !== captchaCode) {
+                errorMessage.textContent = '验证码不正确，请重新输入！';
+                errorMessage.style.display = 'block';
+                updateCaptcha();
+                return;
+            }
+            
+            // 更新考生信息
+            document.getElementById('examNumber').textContent = examId;
+            
+            // 生成随机姓名
+            const surnames = ['张', '王', '李', '陈', '林', '黄', '吴', '郑', '刘', '杨'];
+            const names = ['晓明', '志强', '丽华', '国栋', '秀英', '建军', '海燕', '伟杰', '婷婷', '建华'];
+            const randomName = surnames[Math.floor(Math.random() * surnames.length)] + 
+                              names[Math.floor(Math.random() * names.length)];
+            document.getElementById('studentName').textContent = randomName;
+            
+            // 随机生成学校
+            const schools = [
+                '漳州第一中学初中部', 
+                '漳州第三中学初中部', 
+                '漳州第五中学初中部',
+                '漳州实验中学',
+                '漳州立人学校',
+                '漳州正兴学校',
+                '漳州八中初中部',
+                '漳州二中初中部'
+            ];
+            document.getElementById('school').textContent = schools[Math.floor(Math.random() * schools.length)];
+            
+            // 生成并显示成绩
+            displayScores();
             
             // 显示结果
             document.getElementById('resultContainer').style.display = 'block';
@@ -627,6 +775,16 @@
                 if(opacity >= 1) clearInterval(fadeIn);
             }, 30);
         });
+        
+        // 点击验证码刷新
+        document.getElementById('captchaCode').addEventListener('click', updateCaptcha);
+        
+        // 初始更新时间和验证码
+        updateDateTime();
+        updateCaptcha();
+        
+        // 每秒更新一次时间
+        setInterval(updateDateTime, 1000);
     </script>
 </body>
 </html>
