@@ -3,905 +3,344 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>漳州市中考成绩查询系统</title>
+    <title>2024年漳州市中考成绩查询</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #e6f7ff 0%, #f0f9ff 100%);
+            background: linear-gradient(135deg, #f0f7ff 0%, #e6f0ff 100%);
+            color: #333;
             min-height: 100vh;
             padding: 20px;
-            position: relative;
-            overflow-x: hidden;
-        }
-        
-        .header {
-            text-align: center;
-            padding: 20px 0;
-            position: relative;
-        }
-        
-        .logo-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .logo {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #1e88e5, #0d47a1);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-        }
-        
-        .logo i {
-            font-size: 40px;
-            color: white;
-        }
-        
-        .title {
-            font-size: 32px;
-            color: #0d47a1;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-            letter-spacing: 2px;
-        }
-        
-        .subtitle {
-            font-size: 18px;
-            color: #1565c0;
-            margin-top: 5px;
-            font-weight: 500;
-        }
-        
-        .datetime {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            color: #333;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         
         .container {
-            max-width: 900px;
-            margin: 30px auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            overflow: hidden;
-            position: relative;
-            z-index: 10;
-        }
-        
-        .banner {
-            height: 180px;
-            background: linear-gradient(to right, #0d47a1, #1976d2, #42a5f5);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 28px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-            letter-spacing: 2px;
-        }
-        
-        .banner::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="0,0 100,100 0,100" fill="rgba(255,255,255,0.1)"/></svg>');
-            background-size: 100% 100%;
+            max-width: 900px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 100, 0.15);
+            overflow: hidden;
+            margin: 20px;
         }
         
-        .banner-text {
-            position: relative;
-            z-index: 2;
+        header {
+            background: linear-gradient(135deg, #1a5fb4 0%, #0d47a1 100%);
+            color: white;
+            padding: 25px 30px;
             text-align: center;
-            padding: 0 20px;
+            position: relative;
         }
         
-        .banner-text small {
-            display: block;
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
             font-size: 16px;
-            margin-top: 10px;
             opacity: 0.9;
         }
         
-        .content {
+        .badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ffcc00;
+            color: #333;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .main-content {
             padding: 30px;
         }
         
-        .info-box {
-            background: #f8fdff;
-            border: 1px solid #bbdefb;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 30px;
-            position: relative;
-        }
-        
-        .info-box h3 {
-            color: #1565c0;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px dashed #90caf9;
-        }
-        
-        .info-content {
-            line-height: 1.8;
-            color: #333;
-        }
-        
-        .info-content p {
-            margin-bottom: 10px;
-        }
-        
-        .info-content i {
-            color: #1976d2;
-            margin-right: 8px;
-            width: 20px;
-        }
-        
-        .form-container {
-            background: #f5fbff;
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            margin-bottom: 30px;
-        }
-        
-        .form-title {
-            text-align: center;
-            color: #0d47a1;
-            font-size: 22px;
-            margin-bottom: 25px;
-            position: relative;
-        }
-        
-        .form-title::after {
-            content: "";
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(to right, #42a5f5, #1976d2);
-            border-radius: 3px;
-        }
-        
-        .form-group {
+        .section-title {
+            font-size: 20px;
+            color: #1a5fb4;
             margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e3f2fd;
+            font-weight: 600;
         }
         
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #1565c0;
-            font-weight: 500;
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 14px 15px;
-            border: 1px solid #bbdefb;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-        
-        .form-control:focus {
-            outline: none;
-            border-color: #1976d2;
-            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.2);
-        }
-        
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(to right, #1976d2, #0d47a1);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 10px rgba(13, 71, 161, 0.3);
-        }
-        
-        .btn:hover {
-            background: linear-gradient(to right, #1e88e5, #1565c0);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(13, 71, 161, 0.4);
-        }
-        
-        .result-container {
-            display: none;
-            background: #e3f2fd;
-            border-radius: 10px;
-            padding: 25px;
-            margin-top: 30px;
-            border: 1px solid #90caf9;
-        }
-        
-        .result-header {
-            text-align: center;
-            color: #0d47a1;
-            margin-bottom: 25px;
-        }
-        
-        .student-info {
-            display: flex;
-            justify-content: space-between;
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            flex-wrap: wrap;
-        }
-        
-        .info-item {
-            text-align: center;
-            flex: 1;
-            min-width: 150px;
-            margin: 5px 0;
-        }
-        
-        .info-label {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        
-        .info-value {
-            font-size: 18px;
-            font-weight: bold;
-            color: #0d47a1;
-        }
-        
-        .score-table {
+        table {
             width: 100%;
             border-collapse: collapse;
-            background: white;
+            margin-bottom: 30px;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        
+        th {
+            background: linear-gradient(to bottom, #e3f2fd, #bbdefb);
+            color: #0d47a1;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .info-table th:first-child {
+            width: 20%;
         }
         
         .score-table th {
-            background: #bbdefb;
-            color: #0d47a1;
-            padding: 14px;
-            text-align: center;
+            font-size: 14px;
+            padding: 12px 8px;
         }
         
-        .score-table td {
-            padding: 12px;
-            text-align: center;
-            border-bottom: 1px solid #e3f2fd;
-        }
-        
-        .score-table tr:last-child td {
-            border-bottom: none;
+        .highlight {
+            background-color: #e3f2fd;
+            font-weight: 600;
         }
         
         .total-row {
-            background: #e3f2fd;
-            font-weight: bold;
+            background-color: #e8f5e9;
+            font-weight: 700;
+            color: #2e7d32;
         }
         
-        .total-row td {
-            color: #0d47a1;
-            font-size: 18px;
+        .grade-a {
+            color: #2e7d32;
+            font-weight: 700;
         }
         
-        .footer {
-            text-align: center;
-            padding: 25px 0;
+        .notes {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+            border-left: 4px solid #1a5fb4;
+        }
+        
+        .notes h3 {
+            color: #1a5fb4;
+            margin-bottom: 12px;
+        }
+        
+        .notes p {
+            margin-bottom: 8px;
+            line-height: 1.6;
             color: #555;
-            font-size: 14px;
+        }
+        
+        .footer-info {
+            display: flex;
+            justify-content: space-between;
+            background: #f5f5f5;
+            padding: 20px 30px;
             border-top: 1px solid #e0e0e0;
-            margin-top: 20px;
-            position: relative;
         }
         
-        .footer-links {
-            margin-top: 10px;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .footer-links a {
-            color: #1976d2;
-            text-decoration: none;
-            margin: 5px 10px;
-        }
-        
-        .footer-links a:hover {
-            text-decoration: underline;
-        }
-        
-        .local-icon {
-            position: absolute;
-            font-size: 120px;
-            color: rgba(25, 118, 210, 0.05);
-            z-index: 1;
-        }
-        
-        .icon1 {
-            top: 20px;
-            left: 30px;
-        }
-        
-        .icon2 {
-            bottom: 20px;
-            right: 30px;
-            transform: rotate(30deg);
-        }
-        
-        .zhangzhou-pattern {
-            position: absolute;
-            width: 100%;
-            height: 100px;
-            bottom: 0;
-            left: 0;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0,0 Q20,10 40,0 T80,0 T100,10 L100,10 L0,10 Z" fill="%231976d2" opacity="0.1"/></svg>');
-            background-size: 100% 100%;
-            z-index: 0;
-        }
-        
-        .captcha-container {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .captcha-input {
+        .footer-info div {
             flex: 1;
         }
         
-        .captcha-code {
-            background: #e0e0e0;
-            border-radius: 5px;
-            width: 120px;
-            height: 45px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            letter-spacing: 2px;
-            color: #333;
-            user-select: none;
-            cursor: pointer;
-            font-size: 20px;
-            font-family: 'Courier New', monospace;
-        }
-        
-        .message {
-            display: none;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 8px;
-            text-align: center;
-            font-weight: bold;
-        }
-        
-        .error {
-            background: #ffebee;
-            color: #c62828;
-            border: 1px solid #ffcdd2;
-        }
-        
-        .success {
-            background: #e8f5e9;
-            color: #2e7d32;
-            border: 1px solid #c8e6c9;
-        }
-        
-        .analysis-box {
-            margin-top: 25px;
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-        
-        .analysis-title {
-            color: #0d47a1;
-            font-weight: bold;
+        .footer-info h3 {
+            color: #1a5fb4;
             margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .actions {
             display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-weight: 600;
+            display: inline-flex;
             align-items: center;
-        }
-        
-        .disclaimer-btn {
-            margin-top: 15px;
-            color: #1976d2;
-            background: none;
-            border: none;
+            gap: 8px;
             cursor: pointer;
-            text-decoration: underline;
-            font-size: 20px;
-        }
-        
-        .disclaimer-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .disclaimer-content {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            max-width: 600px;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            position: relative;
-        }
-        
-        .disclaimer-content h3 {
-            color: #0d47a1;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        
-        .disclaimer-content p {
-            margin-bottom: 15px;
-            line-height: 1.6;
-        }
-        
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
+            transition: all 0.3s ease;
+            text-decoration: none;
             border: none;
-            font-size: 20px;
-            cursor: pointer;
-            color: #555;
+            font-size: 16px;
+        }
+        
+        .btn-print {
+            background: linear-gradient(to right, #1a5fb4, #0d47a1);
+            color: white;
+        }
+        
+        .btn-exit {
+            background: linear-gradient(to right, #f44336, #d32f2f);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
         
         @media (max-width: 768px) {
-            .title {
-                font-size: 24px;
+            .score-table {
+                font-size: 14px;
             }
             
-            .banner {
-                font-size: 22px;
-                height: 140px;
+            .score-table th, 
+            .score-table td {
+                padding: 8px 5px;
             }
             
-            .student-info {
+            .footer-info {
                 flex-direction: column;
+                gap: 20px;
             }
             
-            .info-item {
-                margin-bottom: 15px;
-            }
-            
-            .datetime {
-                position: static;
-                margin-top: 10px;
-            }
-            
-            .footer-links {
-                flex-direction: column;
-            }
-            
-            .footer-links a {
-                margin: 5px 0;
+            .actions {
+                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
-    <i class="fas fa-school local-icon icon1"></i>
-    <i class="fas fa-book local-icon icon2"></i>
-    
-    <div class="header">
-        <div class="logo-container">
-            <div class="logo">
-                <i class="fas fa-graduation-cap"></i>
+    <div class="container">
+        <header>
+            <h1>2024年漳州市中考成绩查询</h1>
+            <div class="subtitle">成绩信息 | 考生信息查询</div>
+            <div class="badge">正式成绩单</div>
+        </header>
+        
+        <div class="main-content">
+            <h2 class="section-title">考生信息</h2>
+            <table class="info-table">
+                <tr>
+                    <th>考生信息</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                </tr>
+                <tr>
+                    <th>考生号</th>
+                    <td>2437060089</td>
+                    <td rowspan="2">王小明</td>
+                </tr>
+                <tr>
+                    <th>准考证号</th>
+                    <td>243704908</td>
+                </tr>
+                <tr>
+                    <th>证件号</th>
+                    <td colspan="2">350622200903300053</td>
+                </tr>
+            </table>
+            
+            <h2 class="section-title">各科目成绩</h2>
+            <table class="score-table">
+                <tr>
+                    <th rowspan="2">科目</th>
+                    <th colspan="9">各科目成绩</th>
+                    <th colspan="2">总分区县位次</th>
+                </tr>
+                <tr>
+                    <th>语文</th>
+                    <th>数学</th>
+                    <th>英语</th>
+                    <th>道德与法治</th>
+                    <th>物理</th>
+                    <th>化学</th>
+                    <th>历史</th>
+                    <th>地理</th>
+                    <th>生物</th>
+                    <th>体育与健康基础知识</th>
+                    <th>现场测试</th>
+                </tr>
+                <tr>
+                    <th>卷面原始分</th>
+                    <td>125.00</td>
+                    <td>129.00</td>
+                    <td>143.00</td>
+                    <td>97.00</td>
+                    <td>92.00</td>
+                    <td>93.00</td>
+                    <td>92.00</td>
+                    <td>98.00</td>
+                    <td>92.00</td>
+                    <td>3.25</td>
+                    <td>35.20</td>
+                </tr>
+                <tr>
+                    <th>各科折算分</th>
+                    <td class="grade-a">A</td>
+                    <td class="grade-a">A</td>
+                    <td class="grade-a">A</td>
+                    <td class="grade-a">A</td>
+                    <td class="grade-a">A</td>
+                    <td class="grade-a">A</td>
+                    <td class="grade-a">A</td>
+                    <td class="grade-a">A</td>
+                    <td class="grade-a">A</td>
+                    <td class="grade-a">A</td>
+                    <td class="total-row">38.50</td>
+                </tr>
+                <tr>
+                    <th>等级分</th>
+                    <td class="grade-a">A</td>
+                    <td class="grade-a">A</td>
+                    <td class="grade-a">A</td>
+                    <td class="grade-a">A</td>
+                    <td class="grade-a">A</td>
+                    <td class="grade-a">A</td>
+                    <td class="grade-a">A</td>
+                    <td class="grade-a">A</td>
+                    <td class="grade-a">A</td>
+                    <td class="grade-a">A</td>
+                    <td class="total-row">726</td>
+                </tr>
+            </table>
+            
+            <div class="notes">
+                <h3>成绩说明：</h3>
+                <p><i class="fas fa-check-circle"></i> 1、单科折算分 = 单科卷面原始分 × 折算比例，保留小数点后一位(小数点后第二位四舍五入)。</p>
+                <p><i class="fas fa-check-circle"></i> 2、各科折算分总分 = 各科折算分相加后保留整数(小数点后一位四舍五入)。</p>
+            </div>
+        </div>
+        
+        <div class="footer-info">
+            <div>
+                <h3>考试时间：</h3>
+                <p>2024年6月21日-23日</p>
             </div>
             <div>
-                <h1 class="title">漳州市中考成绩查询系统</h1>
-                <div class="subtitle">Zhangzhou High School Entrance Examination Score Inquiry</div>
+                <h3>试卷编号：</h3>
+                <p>ZZ2024ZK001</p>
             </div>
-        </div>
-        <div class="datetime" id="currentDateTime"></div>
-        <button class="disclaimer-btn" id="disclaimerBtn">免责声明</button>
-    </div>
-    
-    <div class="container">
-        <div class="banner">
-            <div class="banner-text">
-                2025年漳州市初中学业水平考试
-                <small>成绩查询通道已开启</small>
-            </div>
-        </div>
-        
-        <div class="content">
-            <div class="info-box">
-                <h3><i class="fas fa-info-circle"></i> 重要提示</h3>
-                <div class="info-content">
-                    <p><i class="fas fa-check-circle"></i> 成绩查询时间：2025年6月24日 08:00 - 7月8日 18:00</p>
-                    <p><i class="fas fa-check-circle"></i> 请准备好您的准考证号、考生号进行查询</p>
-                    <p><i class="fas fa-check-circle"></i> 对成绩有异议的考生，可在7月12日前向毕业学校提出复核申请</p>
-                    <p><i class="fas fa-check-circle"></i> 漳州市普通高中招生录取工作将于7月15日开始</p>
-                    <p><i class="fas fa-check-circle"></i> 成绩折算规则：语文、数学、英语×100%；物理×90%；化学×60%；政治、历史×50%；生物、地理×30%；体育×100%</p>
-                </div>
-            </div>
-            
-            <div class="form-container">
-                <h3 class="form-title"><i class="fas fa-search"></i> 成绩查询</h3>
-                <div class="message error" id="errorMessage"></div>
-                <form id="scoreForm">
-                    <div class="form-group">
-                        <label for="name"><i class="fas fa-user"></i> 考生姓名</label>
-                        <input type="text" id="name" class="form-control" placeholder="请输入您的姓名">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="examId"><i class="fas fa-ticket-alt"></i> 准考证号 (9位)</label>
-                        <input type="text" id="examId" class="form-control" placeholder="请输入9位准考证号" maxlength="9">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="studentId"><i class="fas fa-id-card"></i> 考生号 (10位)</label>
-                        <input type="text" id="studentId" class="form-control" placeholder="请输入10位考生号" maxlength="10">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="verifyCode"><i class="fas fa-shield-alt"></i> 验证码</label>
-                        <div class="captcha-container">
-                            <input type="text" id="verifyCode" class="form-control captcha-input" placeholder="请输入右侧验证码">
-                            <div class="captcha-code" id="captchaCode">A3F7</div>
-                        </div>
-                    </div>
-                    
-                    <button type="submit" class="btn"><i class="fas fa-paper-plane"></i> 查询成绩</button>
-                </form>
-            </div>
-            
-            <div class="result-container" id="resultContainer">
-                <h3 class="result-header"><i class="fas fa-chart-line"></i> 中考成绩单</h3>
-                
-                <div class="student-info">
-                    <div class="info-item">
-                        <div class="info-label">考生姓名</div>
-                        <div class="info-value" id="studentName">林晓明</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">准考证号</div>
-                        <div class="info-value" id="examNumber">350602001</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">考生号</div>
-                        <div class="info-value" id="studentNumber">2025060012</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">毕业学校</div>
-                        <div class="info-value" id="school">漳州第一中学初中部</div>
-                    </div>
-                </div>
-                
-                <table class="score-table" id="scoreTable">
-                    <thead>
-                        <tr>
-                            <th>考试科目</th>
-                            <th>原始分</th>
-                            <th>折算分</th>
-                            <th>等级</th>
-                            <th>满分值</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- 成绩将由JavaScript动态生成 -->
-                    </tbody>
-                </table>
-                
-                <div class="analysis-box">
-                    <p class="analysis-title"><i class="fas fa-medal"></i> 成绩分析：</p>
-                    <p id="scoreAnalysis">该考生折算总分位列全市前1.5%，各科成绩均衡发展，其中英语、数学、地理、生物表现尤为突出。</p>
+            <div>
+                <h3>备注：</h3>
+                <div class="actions">
+                    <a href="#" class="btn btn-print">
+                        <i class="fas fa-print"></i> 在线打印
+                    </a>
+                    <a href="#" class="btn btn-exit">
+                        <i class="fas fa-sign-out-alt"></i> 退出查询
+                    </a>
                 </div>
             </div>
         </div>
-        
-        <div class="footer">
-            <p>漳州市教育局 主办 | 漳州市教育招生考试中心 承办</p>
-            <p>© 2025 漳州市中考信息平台 版权所有</p>
-            <div class="footer-links">
-                <a href="#"><i class="fas fa-file-alt"></i> 中考政策</a>
-                <a href="#"><i class="fas fa-school"></i> 招生学校</a>
-                <a href="#"><i class="fas fa-phone-alt"></i> 咨询电话</a>
-                <a href="#"><i class="fas fa-question-circle"></i> 常见问题</a>
-            </div>
-        </div>
     </div>
-    
-    <div class="zhangzhou-pattern"></div>
-    
-    <!-- 免责声明模态框 -->
-    <div class="disclaimer-modal" id="disclaimerModal">
-        <div class="disclaimer-content">
-            <button class="close-btn" id="closeModal">&times;</button>
-            <h3><i class="fas fa-exclamation-triangle"></i> 免责声明</h3>
-            <p>本网站为漳州市中考成绩查询模拟系统，仅供娱乐使用，不代表真实中考成绩查询系统。</p>
-            <p>1. 本网站提供的所有成绩均为随机生成，不代表任何真实考生的实际成绩。</p>
-            <p>2. 本网站不收集、不存储任何个人信息，所有输入数据仅在浏览器本地处理，不会上传至任何服务器。</p>
-            <p>3. 本网站与漳州市教育局、漳州市教育招生考试中心及其他教育主管部门无任何关联，仅为前端技术演示项目。</p>
-            <p>4. 本网站提供的成绩折算规则（语文、数学、英语×100%；物理×90%；化学×60%；政治、历史×50%；生物、地理×30%；体育×100%）仅为本系统设定，不代表漳州市中考实际计分方式。</p>
-            <p>5. 成绩等级评定（A、B、C、D、E）依据原始分计算，仅为本系统设定规则。</p>
-            <p>6. 请勿将本网站查询结果作为任何升学、考试或评估依据。</p>
-            <p>7. 本网站开发者对使用本网站可能产生的任何直接或间接损失不承担任何责任。</p>
-            <p>8. 如您有任何疑问，请从漳州市教育局官方渠道获取准确信息。</p>
-            <p style="text-align: center; margin-top: 20px; font-weight: bold;">请理性使用本系统，祝您学业进步！</p>
-        </div>
-    </div>
-    
-    <script>
-        // 更新时间
-        function updateDateTime() {
-            const now = new Date();
-            const options = { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                weekday: 'long'
-            };
-            document.getElementById('currentDateTime').textContent = now.toLocaleDateString('zh-CN', options);
-        }
-        
-        // 生成随机验证码
-        function generateCaptcha() {
-            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-            let captcha = '';
-            for (let i = 0; i < 4; i++) {
-                captcha += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return captcha;
-        }
-        
-        // 更新验证码
-        function updateCaptcha() {
-            const captchaCode = document.getElementById('captchaCode');
-            captchaCode.textContent = generateCaptcha();
-        }
-        
-        // 生成随机成绩
-        function generateRandomScores() {
-            const subjects = [
-                { name: '语文', fullScore: 150, minScore: 90, ratio: 1.0 },
-                { name: '数学', fullScore: 150, minScore: 90, ratio: 1.0 },
-                { name: '英语', fullScore: 150, minScore: 90, ratio: 1.0 },
-                { name: '物理', fullScore: 100, minScore: 60, ratio: 0.9 },
-                { name: '化学', fullScore: 100, minScore: 60, ratio: 0.6 },
-                { name: '道德与法治', fullScore: 100, minScore: 60, ratio: 0.5 },
-                { name: '历史', fullScore: 100, minScore: 60, ratio: 0.5 },
-                { name: '地理', fullScore: 100, minScore: 60, ratio: 0.3 },
-                { name: '生物', fullScore: 100, minScore: 60, ratio: 0.3 },
-                { name: '体育与健康', fullScore: 40, minScore: 24, ratio: 1.0 }
-            ];
-            
-            let totalRawScore = 0;
-            let totalConvertedScore = 0;
-            let scores = [];
-            
-            subjects.forEach(subject => {
-                // 在及格分和满分之间生成随机分数
-                const rawScore = Math.floor(Math.random() * (subject.fullScore - subject.minScore + 1)) + subject.minScore;
-                const convertedScore = Math.round(rawScore * subject.ratio);
-                
-                totalRawScore += rawScore;
-                totalConvertedScore += convertedScore;
-                
-                // 计算等级 (基于原始分)
-                let grade = 'A';
-                const percentage = rawScore / subject.fullScore;
-                if (percentage < 0.05) grade = 'E';
-                else if (percentage < 0.20) grade = 'D';
-                else if (percentage < 0.55) grade = 'C';
-                else if (percentage < 0.85) grade = 'B';
-                else grade = 'A';
-                
-                scores.push({
-                    name: subject.name,
-                    rawScore: rawScore,
-                    convertedScore: convertedScore,
-                    grade: grade,
-                    fullScore: subject.fullScore,
-                    ratio: subject.ratio
-                });
-            });
-            
-            return { scores, totalRawScore, totalConvertedScore };
-        }
-        
-        // 根据折算总分生成分析
-        function generateAnalysis(totalConvertedScore) {
-            if (totalConvertedScore >= 800) {
-                return `该考生折算总分${totalConvertedScore}分（满分800分），位列全市前1%，各科成绩优异，表现出色，有望进入云霄一中科教班。`;
-            } else if (totalConvertedScore >= 700) {
-                return `该考生折算总分${totalConvertedScore}分（满分800分），成绩优秀，位列全市前5%，各科发展均衡，可报考云霄一中。`;
-            } else if (totalConvertedScore >= 600) {
-                return `该考生折算总分${totalConvertedScore}分（满分800分），成绩良好`;
-            } else if (totalConvertedScore >= 500) {
-                return `该考生折算总分${totalConvertedScore}分（满分800分），成绩中等`;
-            } else {
-                return `该考生折算总分${totalConvertedScore}分（满分800分），成绩有待提高，建议考虑职业高中或中专学校，部分科目有明显提升空间。`;
-            }
-        }
-        
-        // 显示成绩
-        function displayScores() {
-            const { scores, totalRawScore, totalConvertedScore } = generateRandomScores();
-            const tableBody = document.querySelector('#scoreTable tbody');
-            tableBody.innerHTML = '';
-            
-            scores.forEach(subject => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${subject.name}</td>
-                    <td>${subject.rawScore}</td>
-                    <td>${subject.convertedScore}</td>
-                    <td>${subject.grade}</td>
-                    <td>${subject.fullScore}</td>
-                `;
-                tableBody.appendChild(row);
-            });
-            
-            // 添加总分行
-            const totalRow = document.createElement('tr');
-            totalRow.className = 'total-row';
-            totalRow.innerHTML = `
-                <td>总分</td>
-                <td>/</td>
-                <td>${totalConvertedScore}</td>
-                <td colspan="2">成绩无效</td>
-            `;
-            tableBody.appendChild(totalRow);
-            
-            // 更新成绩分析
-            document.getElementById('scoreAnalysis').textContent = generateAnalysis(totalConvertedScore);
-        }
-        
-        // 表单提交处理
-        document.getElementById('scoreForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // 获取输入值
-            const name = document.getElementById('name').value;
-            const examId = document.getElementById('examId').value;
-            const studentId = document.getElementById('studentId').value;
-            const verifyCode = document.getElementById('verifyCode').value;
-            const captchaCode = document.getElementById('captchaCode').textContent;
-            const errorMessage = document.getElementById('errorMessage');
-            
-            // 隐藏错误信息
-            errorMessage.style.display = 'none';
-            
-            // 验证输入
-            if (!name || !examId || !studentId || !verifyCode) {
-                errorMessage.textContent = '请填写完整的查询信息！';
-                errorMessage.style.display = 'block';
-                return;
-            }
-            
-            if (examId.length !== 9) {
-                errorMessage.textContent = '准考证号应为9位数字！';
-                errorMessage.style.display = 'block';
-                return;
-            }
-            
-            if (studentId.length !== 10) {
-                errorMessage.textContent = '考生号应为10位数字！';
-                errorMessage.style.display = 'block';
-                return;
-            }
-            
-            if (verifyCode.toUpperCase() !== captchaCode) {
-                errorMessage.textContent = '验证码不正确，请重新输入！';
-                errorMessage.style.display = 'block';
-                updateCaptcha();
-                return;
-            }
-            
-            // 更新考生信息
-            document.getElementById('studentName').textContent = name;
-            document.getElementById('examNumber').textContent = examId;
-            document.getElementById('studentNumber').textContent = studentId;
-            
-            // 随机生成学校
-            const schools = [
-                '云霄实验中学', 
-            ];
-            document.getElementById('school').textContent = schools[Math.floor(Math.random() * schools.length)];
-            
-            // 生成并显示成绩
-            displayScores();
-            
-            // 显示结果
-            document.getElementById('resultContainer').style.display = 'block';
-            
-            // 滚动到结果区域
-            document.getElementById('resultContainer').scrollIntoView({ 
-                behavior: 'smooth' 
-            });
-            
-            // 模拟加载效果
-            const resultContainer = document.getElementById('resultContainer');
-            resultContainer.style.opacity = 0;
-            let opacity = 0;
-            const fadeIn = setInterval(() => {
-                opacity += 0.05;
-                resultContainer.style.opacity = opacity;
-                if(opacity >= 1) clearInterval(fadeIn);
-            }, 30);
-        });
-        
-        // 点击验证码刷新
-        document.getElementById('captchaCode').addEventListener('click', updateCaptcha);
-        
-        // 免责声明
-        const disclaimerModal = document.getElementById('disclaimerModal');
-        const disclaimerBtn = document.getElementById('disclaimerBtn');
-        const closeModal = document.getElementById('closeModal');
-        
-        disclaimerBtn.addEventListener('click', () => {
-            disclaimerModal.style.display = 'flex';
-        });
-        
-        closeModal.addEventListener('click', () => {
-            disclaimerModal.style.display = 'none';
-        });
-        
-        window.addEventListener('click', (e) => {
-            if (e.target === disclaimerModal) {
-                disclaimerModal.style.display = 'none';
-            }
-        });
-        
-        // 初始更新时间和验证码
-        updateDateTime();
-        updateCaptcha();
-        
-        // 每秒更新一次时间
-        setInterval(updateDateTime, 1000);
-    </script>
 </body>
 </html>
