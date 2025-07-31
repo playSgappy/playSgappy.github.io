@@ -21,8 +21,8 @@ export const siteConfig: SiteConfig = {
 		position: "top", // Equivalent to object-position, only supports 'top', 'center', 'bottom'. 'center' by default
 		credit: {
 			enable: true, // Display the credit text of the banner image
-			text: "空色天絵 / NEO TOKYO NOIR 01", // Credit text to be displayed
-			url: "https://www.pixiv.net/artworks/111024784", // (Optional) URL link to the original artwork or artist's page
+			text: "空色天絵 / 天翼接続", // Credit text to be displayed
+			url: "https://www.pixiv.net/artworks/126719770", // (Optional) URL link to the original artwork or artist's page
 		},
 	},
 	toc: {
