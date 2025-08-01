@@ -26,7 +26,7 @@ import { pluginCustomCopyButton } from "./src/plugins/expressive-code/custom-cop
 
 // https://astro.build/config
 export default defineConfig({
-	site: "https://github.com/playSgappy/playSgappy.github.io/",
+	site: "https://playsgappy.github.io/",
 	base: "/",
 	trailingSlash: "always",
 	integrations: [
