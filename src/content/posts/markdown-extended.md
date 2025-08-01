@@ -10,7 +10,7 @@ category: Examples
 draft: false
 ---
 
-## ## GitHub 仓库卡片
+## GitHub 仓库卡片
 您可以添加链接到 GitHub 存储库的动态卡片，在页面加载时，存储库信息将从 GitHub API 中提取。
 
 ::github{repo="Fabrizz/MMM-OnSpotify"}
