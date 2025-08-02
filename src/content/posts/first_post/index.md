@@ -16,7 +16,7 @@ draft: false
 
 本网站的源代码仓库；
 
-::github{repo="playSgappy/playSgappy.gihub.io"}
+::github{repo="playSgappy/playSgappy.github.io"}
 
 ---
 
