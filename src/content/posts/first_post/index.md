@@ -5,7 +5,7 @@ updated: 2025-8-3
 description: 成功地建立一个个人Blog网站
 image: ./cover.jpg
 tags: [日志]
-category: 杂谈
+category: '杂谈'
 draft: false
 ---
 
