@@ -5,7 +5,7 @@ description: A simple example of a Markdown blog post.
 tags:
   - Example
 category: Examples
-draft: false
+draft: true
 ---
 
 # An h1 header
