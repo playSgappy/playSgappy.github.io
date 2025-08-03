@@ -22,3 +22,5 @@
 - 具有小白程度的Python、Html语言知识👌
 - 图一乐搞各种东西😏
 - 主玩Minecraft，10年老玩家
+
+联系请致电astrivellee@qq.com
