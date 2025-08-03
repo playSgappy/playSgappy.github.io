@@ -1,5 +1,7 @@
 # 关于
 
+本网站托管于Github Pages.
+
 ::github{repo="playSgappy/playSgappy.github.io"}
 
 ---
@@ -9,11 +11,17 @@
 > 
 > Banner:有标出自己看😡
 
+---
+
 博主是高中生，这个博客不会很常更。
+
+---
 
 博客目前有两个链接可以进入：
 1. [Github](https://playsgappy.github.io/)
 2. [Netlify](https://sgappy.netlify.app/)
+
+---
 
 ## 关于博主
 
