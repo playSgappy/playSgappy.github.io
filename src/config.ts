@@ -74,6 +74,11 @@ export const profileConfig: ProfileConfig = {
 			icon: "fa6-brands:github",
 			url: "https://github.com/playSgappy/playSgappy.github.io",
 		},
+		{
+			name: "QQ",
+			icon: "fab:fa-qq",
+			url: "tencent://message/?uin=2570043513&Site=&Menu=yes",
+		},
 	],
 };
 
