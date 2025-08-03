@@ -1,9 +1,24 @@
-# About
-This is the demo site for [Fuwari](https://github.com/saicaca/fuwari).
+# 关于
 
-::github{repo="saicaca/fuwari"}
+::github{repo="playSgappy/playSgappy.github.io"}
+
+---
 
 > ### Sources of images used in this site
-> - [Unsplash](https://unsplash.com/)
-> - [星と少女](https://www.pixiv.net/artworks/108916539) by [Stella](https://www.pixiv.net/users/93273965)
-> - [Rabbit - v1.4 Showcase](https://civitai.com/posts/586908) by [Rabbit_YourMajesty](https://civitai.com/user/Rabbit_YourMajesty)
+> Avatar:[空色天絵/Flower Girl 01](https://www.pixiv.net/artworks/112951659)
+> Banner:有标出自己看😡
+
+博主是高中生，这个博客不会很常更。
+
+博客目前有两个链接可以进入：
+1. [Github](https://playsgappy.github.io/)
+2. [Netlify](https://sgappy.netlify.app/)
+
+## 关于博主
+
+- 资深网络废物🗑️
+- 摩羯座♑
+- 拥有强大学习能力👍~~学完就忘~~
+- 具有小白程度的Python、Html语言知识👌
+- 图一乐搞各种东西😏
+- 主玩Minecraft，10年老玩家
