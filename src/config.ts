@@ -1,4 +1,5 @@
 import type {
+	CommentConfig,
 	ExpressiveCodeConfig,
 	LicenseConfig,
 	NavBarConfig,
@@ -6,36 +7,98 @@ import type {
 	SiteConfig,
 } from "./types/config";
 import { LinkPreset } from "./types/config";
+import { getTranslateLanguageFromConfig } from "./utils/language-utils";
+
+// Define site language
+const SITE_LANG = "en"; // Language code, e.g., 'en', 'zh_CN', 'ja', etc.
 
 export const siteConfig: SiteConfig = {
 	title: "Blog",
 	subtitle: "playSgappy",
-	lang: "zh_CN", // 'en', 'zh_CN', 'zh_TW', 'ja', 'ko', 'es', 'th', 'vi'
+	lang: SITE_LANG,// 'en', 'zh_CN', 'zh_TW', 'ja', 'ko', 'es', 'th', 'vi'
 	themeColor: {
 		hue: 250, // Default hue for the theme color, from 0 to 360. e.g. red: 0, teal: 200, cyan: 250, pink: 345
 		fixed: false, // Hide the theme color picker for visitors
 	},
+	translate: {
+		enable: true, // Enable translation feature
+		service: "client.edge", // Use Edge browser translation service
+		defaultLanguage: getTranslateLanguageFromConfig(SITE_LANG), // Automatically set default translation language based on site language
+		showSelectTag: false, // Don't show default language selection dropdown, use custom button
+		autoDiscriminate: true, // Automatically detect user language
+		ignoreClasses: ["ignore", "banner-title", "banner-subtitle"], // CSS class names to ignore for translation
+		ignoreTags: ["script", "style", "code", "pre"], // HTML tags to ignore for translation
+	},
 	banner: {
 		enable: true,
-		src: "assets/images/banner1.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
-		position: "top", // Equivalent to object-position, only supports 'top', 'center', 'bottom'. 'center' by default
+
+		// Support single image or image array, carousel is automatically enabled when array length > 1
+		src: {
+			desktop: [
+				"assets/desktop-banner/1.webp",
+				"assets/desktop-banner/2.webp",
+				"assets/desktop-banner/3.webp",
+				"assets/desktop-banner/4.webp",
+				"assets/desktop-banner/5.webp",
+				"assets/desktop-banner/6.webp",
+				"assets/desktop-banner/7.webp",
+			], // Desktop banner images
+			mobile: [
+				"assets/mobile-banner/1.webp",
+				"assets/mobile-banner/2.webp",
+				"assets/mobile-banner/3.webp",
+				"assets/mobile-banner/4.webp",
+				"assets/mobile-banner/5.webp",
+				"assets/mobile-banner/6.webp",
+				"assets/mobile-banner/7.webp",
+			], // Mobile banner images
+		}, // Use local banner images
+
+		position: "center", // Equivalent to object-position, only supports 'top', 'center', 'bottom'. Default is 'center'
+
+		carousel: {
+			enable: true, // When true: enable carousel for multiple images. When false: randomly display one image from the array
+
+			interval: 2, // Carousel interval time (seconds)
+		},
+
+		homeText: {
+			enable: true, // Display custom text on homepage
+			title: "playSgappy", // Homepage banner main title
+
+			subtitle: [
+				"个人生活记录",
+				"分享美好时光",
+				"记录成长足迹",
+				"探索未知世界",
+			], // Homepage banner subtitle, supports multiple texts
+			typewriter: {
+				enable: true, // Enable subtitle typewriter effect
+
+				speed: 100, // Typing speed (milliseconds)
+				deleteSpeed: 50, // Delete speed (milliseconds)
+				pauseTime: 2000, // Pause time after complete display (milliseconds)
+			},
+		},
+
 		credit: {
-			enable: true, // Display the credit text of the banner image
-			text: "空色天絵 / 天翼接続", // Credit text to be displayed
-			url: "https://www.pixiv.net/artworks/126719770", // (Optional) URL link to the original artwork or artist's page
+			enable: false, // Display banner image source text
+
+			text: "Describe", // Source text to display
+			url: "", // (Optional) URL link to original artwork or artist page
 		},
 	},
 	toc: {
-		enable: true, // Display the table of contents on the right side of the post
-		depth: 2, // Maximum heading depth to show in the table, from 1 to 3
+		enable: true, // Enable table of contents feature
+		depth: 2, // TOC depth, 1-6, 1 means only show h1 headings, 2 means show h1 and h2 headings, and so on
 	},
 	favicon: [
-		// Leave this array empty to use the default favicon
-		//{
-		//	src: '/favicon/icon.png',    // Path of the favicon, relative to the /public directory
-		//	theme: 'light',              // (Optional) Either 'light' or 'dark', set only if you have different favicons for light and dark mode
-		//	sizes: '32x32',              // (Optional) Size of the favicon, set only if you have favicons of different sizes
-		//}
+		// Leave empty to use default favicon
+		// {
+		//   src: '/favicon/icon.png',    // Icon file path
+		//   theme: 'light',              // (Optional) specify theme 'light' | 'dark'
+		//   sizes: '32x32',              // (Optional) icon size
+		// }
 	],
 };
 
@@ -44,35 +107,31 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Home,
 		LinkPreset.Archive,
 		LinkPreset.About,
+		LinkPreset.Friends,
+		LinkPreset.Anime,
+		LinkPreset.Diary,
 		{
 			name: "GitHub",
-			url: "https://github.com/playSgappy/playSgappy.github.io", // Internal links should not include the base path, as it is automatically added
-			external: true, // Show an external link icon and will open in a new tab
+			url: "https://github.com/playSgappy/playSgappy.github.io", // Internal links should not include base path as it will be automatically added
+			external: true, // Show external link icon and open in new tab
 		},
 	],
 };
 
 export const profileConfig: ProfileConfig = {
-	avatar: "assets/images/avatar1.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+	avatar: "assets/images/avatar1.png", // Relative to /src directory. If starts with '/', relative to /public directory
 	name: "playSgappy",
 	bio: "星星之所愿，点点泛成河。",
 	links: [
 		{
-			name: "Twitter",
-			icon: "fa6-brands:x-twitter", // Visit https://icones.js.org/ for icon codes
-			// You will need to install the corresponding icon set if it's not already included
-			// `pnpm add @iconify-json/<icon-set-name>`
-			url: "https://x.com",
-		},
-		{
-			name: "Steam",
-			icon: "fa6-brands:steam",
-			url: "https://store.steampowered.com",
+			name: "Bilibli",
+			icon: "fa6-brands:bilibili",
+			url: "https://space.bilibili.com/3546605582027736",
 		},
 		{
 			name: "GitHub",
 			icon: "fa6-brands:github",
-			url: "https://github.com/playSgappy/playSgappy.github.io",
+			url: "https://github.com/playSgappy",
 		},
 		{
 			name: "QQ",
@@ -89,7 +148,14 @@ export const licenseConfig: LicenseConfig = {
 };
 
 export const expressiveCodeConfig: ExpressiveCodeConfig = {
-	// Note: Some styles (such as background color) are being overridden, see the astro.config.mjs file.
-	// Please select a dark theme, as this blog theme currently only supports dark background color
+	// Note: Some styles (like background color) have been overridden, see astro.config.mjs file.
+	// Please choose a dark theme as this blog theme currently only supports dark backgrounds
 	theme: "github-dark",
+};
+
+export const commentConfig: CommentConfig = {
+	enable: false, // Enable the comment function. When it is set to false, the comment component will not be displayed in the article area.
+	twikoo: {
+		envId: "https://app.twikoo.js.org",
+	},
 };

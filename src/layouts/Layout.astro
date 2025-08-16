@@ -1,4 +1,5 @@
 ---
+// 只加载最常用的字体权重，减少加载时间
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
@@ -38,12 +39,42 @@ const isHomePage = pathsEqual(Astro.url.pathname, url("/"));
 // defines global css variables
 // why doing this in Layout instead of GlobalStyles: https://github.com/withastro/astro/issues/6728#issuecomment-1502203757
 const configHue = siteConfig.themeColor.hue;
+
+// 获取默认banner图片的辅助函数
+const getDefaultBanner = (): string => {
+	const src = siteConfig.banner.src;
+	if (typeof src === "string") {
+		return src;
+	}
+	if (Array.isArray(src)) {
+		return src[0] || "";
+	}
+	if (src && typeof src === "object") {
+		// 优先使用desktop，如果没有则使用mobile
+		const desktopSrc = src.desktop;
+		const mobileSrc = src.mobile;
+		if (typeof desktopSrc === "string") {
+			return desktopSrc;
+		}
+		if (Array.isArray(desktopSrc) && desktopSrc.length > 0) {
+			return desktopSrc[0];
+		}
+		if (typeof mobileSrc === "string") {
+			return mobileSrc;
+		}
+		if (Array.isArray(mobileSrc) && mobileSrc.length > 0) {
+			return mobileSrc[0];
+		}
+	}
+	return "";
+};
+
 if (!banner || typeof banner !== "string" || banner.trim() === "") {
-	banner = siteConfig.banner.src;
+	banner = getDefaultBanner();
 }
 
 // TODO don't use post cover as banner for now
-banner = siteConfig.banner.src;
+banner = getDefaultBanner();
 
 const enableBanner = siteConfig.banner.enable;
 
@@ -147,6 +178,8 @@ const bannerOffset =
 
 		<link rel="alternate" type="application/rss+xml" title={profileConfig.name} href={`${Astro.site}rss.xml`}/>
 
+
+
 	</head>
 	<body class=" min-h-screen transition " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner}]}
 		  data-overlayscrollbars-initialize
@@ -156,6 +189,34 @@ const bannerOffset =
 
 		<!-- increase the page height during page transition to prevent the scrolling animation from jumping -->
 		<div id="page-height-extend" class="hidden h-[300vh]"></div>
+
+		<!-- Translate.js integration - lazy loading -->
+		{siteConfig.translate?.enable && (
+			<script>
+				// 懒加载translate.js，只有在需要时才加载
+				window.loadTranslateScript = function() {
+					if (window.translate || document.getElementById('translate-script')) {
+						return Promise.resolve();
+					}
+					
+					return new Promise((resolve, reject) => {
+						const script = document.createElement('script');
+						script.src = '/translate.js';
+						script.id = 'translate-script';
+						script.async = true;
+						script.onload = () => {
+							if (typeof window.translate !== 'undefined') {
+								resolve();
+							} else {
+								reject(new Error('translate.js loaded but window.translate not available'));
+							}
+						};
+						script.onerror = reject;
+						document.head.appendChild(script);
+					});
+				};
+			</script>
+		)}
 	</body>
 </html>
 
@@ -190,6 +251,20 @@ const bannerOffset =
 	}
 	.navbar-hidden {
 		@apply opacity-0 -translate-y-16
+	}
+	
+	/* Water waves animation */
+	.waves > .parallax use {
+		animation: wave 25s cubic-bezier(0.5, 0.5, 0.45, 0.5) infinite;
+	}
+
+	@keyframes wave {
+		0% {
+			transform: translate3d(-90px, 0, 0);
+		}
+		100% {
+			transform: translate3d(85px, 0, 0);
+		}
 	}
 }
 </style>
@@ -287,80 +362,309 @@ function loadHue() {
 }
 
 function initCustomScrollbar() {
-	const bodyElement = document.querySelector('body');
-	if (!bodyElement) return;
-	OverlayScrollbars(
-		// docs say that a initialization to the body element would affect native functionality like window.scrollTo
-		// but just leave it here for now
-		{
-			target: bodyElement,
-			cancel: {
-				nativeScrollbarsOverlaid: true,    // don't initialize the overlay scrollbar if there is a native one
-			}
-		}, {
-		scrollbars: {
-			theme: 'scrollbar-base scrollbar-auto py-1',
-			autoHide: 'move',
-			autoHideDelay: 500,
-			autoHideSuspend: false,
-		},
-	});
-
-	const katexElements = document.querySelectorAll('.katex-display') as NodeListOf<HTMLElement>;
-
-	const katexObserverOptions = {
-		root: null,
-		rootMargin: '100px',
-		threshold: 0.1
-	};
-
-	const processKatexElement = (element: HTMLElement) => {
-		if (!element.parentNode) return;
-		if (element.hasAttribute('data-scrollbar-initialized')) return;
-
-		const container = document.createElement('div');
-		container.className = 'katex-display-container';
-		container.setAttribute('aria-label', 'scrollable container for formulas');
-
-		element.parentNode.insertBefore(container, element);
-		container.appendChild(element);
-
-		OverlayScrollbars(container, {
+	// 延迟初始化滚动条以提升性能
+	requestIdleCallback(() => {
+		const bodyElement = document.querySelector('body');
+		if (!bodyElement) return;
+		
+		// 简化配置以提升性能
+		OverlayScrollbars(
+			{
+				target: bodyElement,
+				cancel: {
+					nativeScrollbarsOverlaid: true,
+				}
+			}, {
 			scrollbars: {
-				theme: 'scrollbar-base scrollbar-auto',
-				autoHide: 'leave',
-				autoHideDelay: 500,
-				autoHideSuspend: false
-			}
+				theme: 'scrollbar-base scrollbar-auto py-1',
+				autoHide: 'move',
+				autoHideDelay: 800,
+				autoHideSuspend: false,
+			},
 		});
 
-		element.setAttribute('data-scrollbar-initialized', 'true');
-	};
+		// 懒加载katex滚动条
+		const katexElements = document.querySelectorAll('.katex-display') as NodeListOf<HTMLElement>;
+		if (katexElements.length === 0) return;
 
-	const katexObserver = new IntersectionObserver((entries, observer) => {
-		entries.forEach(entry => {
-			if (entry.isIntersecting) {
-			processKatexElement(entry.target as HTMLElement);
-			observer.unobserve(entry.target);
-			}
+		const katexObserver = new IntersectionObserver((entries, observer) => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					const element = entry.target as HTMLElement;
+					if (!element.parentNode || element.hasAttribute('data-scrollbar-initialized')) return;
+
+					const container = document.createElement('div');
+					container.className = 'katex-display-container';
+					element.parentNode.insertBefore(container, element);
+					container.appendChild(element);
+
+					OverlayScrollbars(container, {
+						scrollbars: {
+							theme: 'scrollbar-base scrollbar-auto',
+							autoHide: 'leave',
+							autoHideDelay: 800,
+						}
+					});
+
+					element.setAttribute('data-scrollbar-initialized', 'true');
+					observer.unobserve(entry.target);
+				}
+			});
+		}, {
+			root: null,
+			rootMargin: '200px',
+			threshold: 0.1
 		});
-	}, katexObserverOptions);
 
-	katexElements.forEach(element => {
-		katexObserver.observe(element);
+		katexElements.forEach(element => {
+			katexObserver.observe(element);
+		});
 	});
 }
 
 function showBanner() {
 	if (!siteConfig.banner.enable) return;
 
-	const banner = document.getElementById('banner');
-	if (!banner) {
-		console.error('Banner element not found');
+	// 使用requestAnimationFrame优化DOM操作
+	requestAnimationFrame(() => {
+		// Handle single image banner (desktop)
+		const banner = document.getElementById('banner');
+		if (banner) {
+			banner.classList.remove('opacity-0', 'scale-105');
+		}
+
+		// Handle mobile single image banner - 使用与电脑端相同的逻辑
+		const mobileBanner = document.querySelector('.block.lg\\:hidden[alt="Mobile banner image of the blog"]');
+		if (mobileBanner && !document.getElementById('banner-carousel')) {
+			// 移动端使用与电脑端相同的初始化逻辑
+			mobileBanner.classList.remove('opacity-0', 'scale-105');
+			mobileBanner.classList.add('opacity-100');
+		}
+
+		// Handle carousel banner - 立即初始化，移除延迟
+		const carousel = document.getElementById('banner-carousel');
+		if (carousel) {
+			// 立即初始化轮播，移除延迟以改善流畅性
+			initCarousel();
+		}
+	});
+}
+
+function initCarousel() {
+	const carouselItems = document.querySelectorAll('.carousel-item');
+	
+	// 根据屏幕尺寸过滤有效的轮播项
+	const isMobile = window.innerWidth < 1024; // lg breakpoint
+	const validItems = Array.from(carouselItems).filter(item => {
+		if (isMobile) {
+			// 移动端：只显示有mobile图片的项目
+			return item.querySelector('.block.lg\\:hidden');
+		} else {
+			// 桌面端：只显示有desktop图片的项目
+			return item.querySelector('.hidden.lg\\:block');
+		}
+	});
+	
+	// Check if carousel is disabled but we have multiple images - show random image
+	if (validItems.length > 1 && !siteConfig.banner.carousel?.enable) {
+		// Hide all images first
+		carouselItems.forEach((item, index) => {
+			item.classList.add('opacity-0', 'scale-110');
+			item.classList.remove('opacity-100', 'scale-100');
+		});
+		
+		// Show random valid image
+		const randomIndex = Math.floor(Math.random() * validItems.length);
+		const randomItem = validItems[randomIndex];
+		
+		randomItem.classList.add('opacity-100', 'scale-100');
+		randomItem.classList.remove('opacity-0', 'scale-110');
 		return;
 	}
+	
+	if (validItems.length > 1 && siteConfig.banner.carousel?.enable) {
+		let currentIndex = 0;
+		const interval = siteConfig.banner.carousel?.interval || 6;
+		let carouselInterval;
+		let isPaused = false;
 
-	banner.classList.remove('opacity-0', 'scale-105');
+		// 移动端触摸手势支持
+		let startX = 0;
+		let startY = 0;
+		let isSwiping = false;
+		const carousel = document.getElementById('banner-carousel');
+
+		// 切换图片的函数 - 基于有效项目
+		function switchToSlide(index) {
+			// 隐藏当前图片
+			const currentItem = validItems[currentIndex];
+			currentItem.classList.remove('opacity-100', 'scale-100');
+			currentItem.classList.add('opacity-0', 'scale-110');
+
+			// 更新索引
+			currentIndex = index;
+			
+			// 显示新图片
+			const nextItem = validItems[currentIndex];
+			nextItem.classList.add('opacity-100', 'scale-100');
+			nextItem.classList.remove('opacity-0', 'scale-110');
+		}
+
+		// 初始化：隐藏所有图片，只显示第一张有效图片
+		carouselItems.forEach((item) => {
+			item.classList.add('opacity-0', 'scale-110');
+			item.classList.remove('opacity-100', 'scale-100');
+		});
+		
+		// 显示第一张有效图片
+		if (validItems.length > 0) {
+			validItems[0].classList.add('opacity-100', 'scale-100');
+			validItems[0].classList.remove('opacity-0', 'scale-110');
+		}
+
+		// 移动端触摸事件
+		if (carousel && 'ontouchstart' in window) {
+			carousel.addEventListener('touchstart', (e) => {
+				startX = e.touches[0].clientX;
+				startY = e.touches[0].clientY;
+				isSwiping = false;
+				isPaused = true;
+				clearInterval(carouselInterval);
+			}, { passive: true });
+
+			carousel.addEventListener('touchmove', (e) => {
+				if (!startX || !startY) return;
+				
+				const diffX = Math.abs(e.touches[0].clientX - startX);
+				const diffY = Math.abs(e.touches[0].clientY - startY);
+				
+				// 判断是否为水平滑动
+				if (diffX > diffY && diffX > 30) {
+					isSwiping = true;
+					e.preventDefault();
+				}
+			}, { passive: false });
+
+			carousel.addEventListener('touchend', (e) => {
+				if (!startX || !startY || !isSwiping) {
+					isPaused = false;
+					startCarousel();
+					return;
+				}
+				
+				const endX = e.changedTouches[0].clientX;
+				const diffX = startX - endX;
+				
+				// 滑动距离超过50px才切换
+				if (Math.abs(diffX) > 50) {
+					if (diffX > 0) {
+					// 向左滑动，显示下一张
+					const nextIndex = (currentIndex + 1) % validItems.length;
+					switchToSlide(nextIndex);
+				} else {
+					// 向右滑动，显示上一张
+					const prevIndex = (currentIndex - 1 + validItems.length) % validItems.length;
+					switchToSlide(prevIndex);
+				}
+				}
+				
+				startX = 0;
+				startY = 0;
+				isSwiping = false;
+				isPaused = false;
+				
+				// 重新开始自动轮播
+				startCarousel();
+			}, { passive: true });
+		}
+
+		// 开始轮播的函数
+		function startCarousel() {
+			clearInterval(carouselInterval);
+			carouselInterval = setInterval(() => {
+				if (!isPaused) {
+					const nextIndex = (currentIndex + 1) % validItems.length;
+					switchToSlide(nextIndex);
+				}
+			}, interval * 1000);
+		}
+
+		// 鼠标悬停暂停（桌面端）
+		if (carousel) {
+			carousel.addEventListener('mouseenter', () => {
+				isPaused = true;
+				clearInterval(carouselInterval);
+			});
+
+			carousel.addEventListener('mouseleave', () => {
+				isPaused = false;
+				startCarousel();
+			});
+		}
+
+		// 开始自动轮播
+		startCarousel();
+	}
+}
+
+function initTranslate() {
+	if (!siteConfig.translate?.enable || typeof window.translate === 'undefined') return;
+	
+	// 配置translate.js
+	if (siteConfig.translate.service && window.translate) {
+		window.translate.service.use(siteConfig.translate.service);
+	}
+	
+	if (siteConfig.translate.defaultLanguage && window.translate) {
+		window.translate.language.setLocal(siteConfig.translate.defaultLanguage);
+	}
+	
+	if (siteConfig.translate.autoDiscriminate && window.translate) {
+		window.translate.setAutoDiscriminateLocalLanguage();
+	}
+	
+	// 设置忽略的类名和标签
+	if (siteConfig.translate.ignoreClasses && window.translate) {
+		siteConfig.translate.ignoreClasses.forEach(className => {
+			window.translate.ignore.class.push(className);
+		});
+	}
+	
+	if (siteConfig.translate.ignoreTags && window.translate) {
+		siteConfig.translate.ignoreTags.forEach(tagName => {
+			window.translate.ignore.tag.push(tagName);
+		});
+	}
+	
+	// 不显示默认的select选择框
+	if (siteConfig.translate.showSelectTag === false && window.translate) {
+		window.translate.selectLanguageTag.show = false;
+	}
+	
+	// 禁用自动保存翻译状态到localStorage
+	if (window.translate) {
+		window.translate.storage.set = function() {
+			// 空函数，阻止保存状态
+		};
+	
+		// 启动翻译监听
+		window.translate.listener.start();
+	
+		// 执行翻译初始化
+		window.translate.execute();
+	}
+}
+
+// 懒加载并初始化翻译功能
+async function loadAndInitTranslate() {
+	if (!siteConfig.translate?.enable) return;
+	
+	try {
+		await window.loadTranslateScript();
+		initTranslate();
+	} catch (error) {
+		console.error('Failed to load translate.js:', error);
+	}
 }
 
 function init() {
@@ -369,6 +673,8 @@ function init() {
 	loadHue();
 	initCustomScrollbar();
 	showBanner();
+	
+	// 翻译功能改为懒加载，不在页面初始化时加载
 }
 
 /* Load settings when entering the site */
@@ -391,27 +697,84 @@ const setup = () => {
 		// Remove the delay for the first time page load
 		document.documentElement.style.setProperty('--content-delay', '0ms')
 
-		// prevent elements from overlapping the navbar
-		if (!bannerEnabled) {
-			return
-		}
-		let threshold = window.innerHeight * (BANNER_HEIGHT / 100) - 72 - 16
-		let navbar = document.getElementById('navbar-wrapper')
-		if (!navbar || !document.body.classList.contains('lg:is-home')) {
-			return
-		}
-		if (document.body.scrollTop >= threshold || document.documentElement.scrollTop >= threshold) {
-			navbar.classList.add('navbar-hidden')
+		// 简化navbar处理逻辑
+		if (bannerEnabled) {
+			const navbar = document.getElementById('navbar-wrapper')
+			if (navbar && document.body.classList.contains('lg:is-home')) {
+				const threshold = window.innerHeight * (BANNER_HEIGHT / 100) - 88
+				if (document.documentElement.scrollTop >= threshold) {
+					navbar.classList.add('navbar-hidden')
+				}
+			}
 		}
 	})
-	window.swup.hooks.on('content:replace', initCustomScrollbar)
+	window.swup.hooks.on('content:replace', () => {
+		initCustomScrollbar();
+		
+		// 重新初始化 TOC 组件
+		const tocElement = document.querySelector('table-of-contents');
+		if (tocElement && typeof tocElement.init === 'function') {
+			setTimeout(() => {
+				tocElement.init();
+			}, 100);
+		}
+		
+		// 重新初始化移动端 TOC 组件
+		if (typeof window.mobileTOCInit === 'function') {
+			setTimeout(() => {
+				window.mobileTOCInit();
+			}, 100);
+		}
+		
+		// 页面内容替换后重新执行翻译（仅在翻译已加载时）
+		setTimeout(() => {
+			if (siteConfig.translate?.enable && typeof window.translate !== 'undefined') {
+				window.translate.execute();
+			}
+		}, 100);
+	})
 	window.swup.hooks.on('visit:start', (visit: {to: {url: string}}) => {
 		// change banner height immediately when a link is clicked
 		const bodyElement = document.querySelector('body')
-		if (pathsEqual(visit.to.url, url('/'))) {
+		const isHomePage = pathsEqual(visit.to.url, url('/'))
+		
+		if (isHomePage) {
 			bodyElement!.classList.add('lg:is-home');
 		} else {
 			bodyElement!.classList.remove('lg:is-home');
+		}
+
+		// Control banner text visibility based on page
+		const bannerTextOverlay = document.querySelector('.banner-text-overlay')
+		if (bannerTextOverlay) {
+			if (isHomePage) {
+				bannerTextOverlay.classList.remove('hidden')
+			} else {
+				bannerTextOverlay.classList.add('hidden')
+			}
+		}
+
+		// Control mobile banner visibility based on page with improved staging animation
+		const bannerWrapper = document.getElementById('banner-wrapper')
+		const mainContentWrapper = document.querySelector('.absolute.w-full.z-30')
+		
+		if (bannerWrapper && mainContentWrapper) {
+			if (isHomePage) {
+				// 首页：延迟移除隐藏类，让banner和内容优雅地出现
+				setTimeout(() => {
+					bannerWrapper.classList.remove('mobile-hide-banner')
+				}, 100)
+				setTimeout(() => {
+					mainContentWrapper.classList.remove('mobile-main-no-banner')
+				}, 150)
+			} else {
+				// 非首页：分阶段隐藏，先隐藏banner，再移动内容
+				bannerWrapper.classList.add('mobile-hide-banner')
+				// 延迟移动内容，让banner先完全消失
+				setTimeout(() => {
+					mainContentWrapper.classList.add('mobile-main-no-banner')
+				}, 100)
+			}
 		}
 
 		// increase the page height during page transition to prevent the scrolling animation from jumping
@@ -432,6 +795,12 @@ const setup = () => {
 		if (heightExtend) {
 			heightExtend.classList.remove('hidden')
 		}
+		
+		// 确保页面滚动到顶部，特别是移动端banner关闭时
+		window.scrollTo({
+			top: 0,
+			behavior: 'instant'
+		});
 	});
 	window.swup.hooks.on('visit:end', (_visit: {to: {url: string}}) => {
 		setTimeout(() => {
@@ -457,43 +826,59 @@ if (window?.swup?.hooks) {
 let backToTopBtn = document.getElementById('back-to-top-btn');
 let toc = document.getElementById('toc-wrapper');
 let navbar = document.getElementById('navbar-wrapper')
-function scrollFunction() {
-	let bannerHeight = window.innerHeight * (BANNER_HEIGHT / 100)
 
-	if (backToTopBtn) {
-		if (document.body.scrollTop > bannerHeight || document.documentElement.scrollTop > bannerHeight) {
-			backToTopBtn.classList.remove('hide')
-		} else {
-			backToTopBtn.classList.add('hide')
-		}
-	}
-
-	if (bannerEnabled && toc) {
-		if (document.body.scrollTop > bannerHeight || document.documentElement.scrollTop > bannerHeight) {
-			toc.classList.remove('toc-hide')
-		} else {
-			toc.classList.add('toc-hide')
-		}
-	}
-
-	if (!bannerEnabled) return
-	if (navbar) {
-		const NAVBAR_HEIGHT = 72
-		const MAIN_PANEL_EXCESS_HEIGHT = MAIN_PANEL_OVERLAPS_BANNER_HEIGHT * 16			// The height the main panel overlaps the banner
-
-		let bannerHeight = BANNER_HEIGHT
-		if (document.body.classList.contains('lg:is-home') && window.innerWidth >= 1024) {
-			bannerHeight = BANNER_HEIGHT_HOME
-		}
-		let threshold = window.innerHeight * (bannerHeight / 100) - NAVBAR_HEIGHT - MAIN_PANEL_EXCESS_HEIGHT - 16
-		if (document.body.scrollTop >= threshold || document.documentElement.scrollTop >= threshold) {
-			navbar.classList.add('navbar-hidden')
-		} else {
-			navbar.classList.remove('navbar-hidden')
+// 节流函数
+function throttle(func: Function, limit: number) {
+	let inThrottle: boolean;
+	return function(this: any) {
+		const args = arguments;
+		const context = this;
+		if (!inThrottle) {
+			func.apply(context, args);
+			inThrottle = true;
+			setTimeout(() => inThrottle = false, limit);
 		}
 	}
 }
-window.onscroll = scrollFunction
+
+function scrollFunction() {
+	const scrollTop = document.documentElement.scrollTop;
+	const bannerHeight = window.innerHeight * (BANNER_HEIGHT / 100);
+
+	// 批量处理DOM操作
+	requestAnimationFrame(() => {
+		if (backToTopBtn) {
+			if (scrollTop > bannerHeight) {
+				backToTopBtn.classList.remove('hide')
+			} else {
+				backToTopBtn.classList.add('hide')
+			}
+		}
+
+		if (bannerEnabled && toc) {
+			if (scrollTop > bannerHeight) {
+				toc.classList.remove('toc-hide')
+			} else {
+				toc.classList.add('toc-hide')
+			}
+		}
+
+		if (bannerEnabled && navbar) {
+			const isHome = document.body.classList.contains('lg:is-home') && window.innerWidth >= 1024;
+			const currentBannerHeight = isHome ? BANNER_HEIGHT_HOME : BANNER_HEIGHT;
+			const threshold = window.innerHeight * (currentBannerHeight / 100) - 88;
+			
+			if (scrollTop >= threshold) {
+				navbar.classList.add('navbar-hidden')
+			} else {
+				navbar.classList.remove('navbar-hidden')
+			}
+		}
+	});
+}
+
+// 使用节流优化滚动性能
+window.onscroll = throttle(scrollFunction, 16); // 约60fps
 
 window.onresize = () => {
 	// calculate the --banner-height-extend, which needs to be a multiple of 4 to avoid blurry text
@@ -513,7 +898,7 @@ let pswp = import("photoswipe")
 
 function createPhotoSwipe() {
 	lightbox = new PhotoSwipeLightbox({
-		gallery: ".custom-md img, #post-cover img",
+		gallery: ".custom-md img, #post-cover img, .moment-images img",
 		pswpModule: () => pswp,
 		closeSVG: '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff"><path d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"/></svg>',
 		zoomSVG: '<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#ffffff"><path d="M340-540h-40q-17 0-28.5-11.5T260-580q0-17 11.5-28.5T300-620h40v-40q0-17 11.5-28.5T380-700q17 0 28.5 11.5T420-660v40h40q17 0 28.5 11.5T500-580q0 17-11.5 28.5T460-540h-40v40q0 17-11.5 28.5T380-460q-17 0-28.5-11.5T340-500v-40Zm40 220q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l224 224q11 11 11 28t-11 28q-11 11-28 11t-28-11L532-372q-30 24-69 38t-83 14Zm0-80q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>',
@@ -539,7 +924,7 @@ function createPhotoSwipe() {
 		return itemData
 	})
 
-	lightbox.init()
+	(lightbox as any).init()
 }
 
 const setup = () => {

@@ -1,9 +1,9 @@
 ---
 title: Markdown Example
 published: 2023-10-01
+pinned: false
 description: A simple example of a Markdown blog post.
-tags:
-  - Example
+tags: [Markdown, Blogging]
 category: Examples
 draft: true
 ---
@@ -71,15 +71,15 @@ for i in range(10):
 
 Now a nested list:
 
-1. First, get these ingredients:
+1.  First, get these ingredients:
 
     - carrots
     - celery
     - lentils
 
-2. Boil some water.
+2.  Boil some water.
 
-3. Dump everything in the pot and follow
+3.  Dump everything in the pot and follow
     this algorithm:
 
         find wooden spoon
@@ -156,21 +156,12 @@ Here's a "line block":
 
 and images can be specified like so:
 
-[//]: # (![example image]&#40;./demo-banner.png "An exemplary image"&#41;)
+[//]: # '![example image](./demo-banner.png "An exemplary image")'
 
 Inline math equations go in like so: $\omega = d\phi / dt$. Display
 math should get its own line and be put in in double-dollarsigns:
 
 $$I = \int \rho R^{2} dV$$
-
-$$
-\begin{equation*}
-\pi
-=3.1415926535
- \;8979323846\;2643383279\;5028841971\;6939937510\;5820974944
- \;5923078164\;0628620899\;8628034825\;3421170679\;\ldots
-\end{equation*}
-$$
 
 And note that you can backslash-escape any punctuation characters
 which you wish to be displayed literally, ex.: \`foo\`, \*bar\*, etc.

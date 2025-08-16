@@ -10,6 +10,8 @@ export const ko: Translation = {
 	[Key.tags]: "태그",
 	[Key.categories]: "카테고리",
 	[Key.recentPosts]: "최근 게시물",
+	[Key.postList]: "게시물 목록",
+	[Key.tableOfContents]: "목차",
 
 	[Key.comments]: "댓글",
 
@@ -35,4 +37,30 @@ export const ko: Translation = {
 	[Key.author]: "저자",
 	[Key.publishedAt]: "게시일",
 	[Key.license]: "라이선스",
+	[Key.friends]: "친구",
+	[Key.anime]: "애니메이션",
+	[Key.diary]: "일상",
+
+	// 추번통계
+	[Key.animeTotal]: "총계",
+	[Key.animeWatching]: "시청 중",
+	[Key.animeCompleted]: "시청 완료",
+	[Key.animeStatusWatching]: "시청 중",
+	[Key.animeStatusCompleted]: "시청 완료",
+
+	// 단문 페이지
+	[Key.diarySubtitle]: "언제 어디서나, 일상을 공유",
+	[Key.diaryCount]: "개의 일상",
+	[Key.diaryImage]: "이미지",
+	[Key.diaryReply]: "답글",
+	[Key.diaryTips]: "최근 30개의 일상만 표시",
+	[Key.diaryMinutesAgo]: "분 전",
+	[Key.diaryHoursAgo]: "시간 전",
+	[Key.diaryDaysAgo]: "일 전",
+
+	// 404 페이지
+	[Key.notFound]: "404",
+	[Key.notFoundTitle]: "페이지를 찾을 수 없습니다",
+	[Key.notFoundDescription]: "죄송합니다. 찾으시는 페이지가 존재하지 않거나 이동되었습니다.",
+	[Key.backToHome]: "홈으로 돌아가기",
 };

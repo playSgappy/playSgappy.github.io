@@ -1,6 +1,6 @@
 # 关于
 
-本网站托管于Github Pages.
+本网站使用Astro框架构建，托管于Github Pages.
 
 ::github{repo="playSgappy/playSgappy.github.io"}
 

@@ -11,6 +11,7 @@ const postsCollection = defineCollection({
 		tags: z.array(z.string()).optional().default([]),
 		category: z.string().optional().nullable().default(""),
 		lang: z.string().optional().default(""),
+		pinned: z.boolean().optional().default(false),
 
 		/* For internal use */
 		prevTitle: z.string().default(""),
@@ -19,6 +20,10 @@ const postsCollection = defineCollection({
 		nextSlug: z.string().default(""),
 	}),
 });
+const specCollection = defineCollection({
+	schema: z.object({}),
+});
 export const collections = {
 	posts: postsCollection,
+	spec: specCollection,
 };

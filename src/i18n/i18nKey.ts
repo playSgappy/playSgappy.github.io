@@ -7,6 +7,8 @@ enum I18nKey {
 	tags = "tags",
 	categories = "categories",
 	recentPosts = "recentPosts",
+	postList = "postList",
+	tableOfContents = "tableOfContents",
 
 	comments = "comments",
 
@@ -32,6 +34,32 @@ enum I18nKey {
 	author = "author",
 	publishedAt = "publishedAt",
 	license = "license",
+	friends = 'friends',
+	anime = 'anime',
+	diary = 'diary',
+
+	// 追番统计
+	animeTotal = 'animeTotal',
+	animeWatching = 'animeWatching',
+	animeCompleted = 'animeCompleted',
+	animeStatusWatching = 'animeStatusWatching',
+	animeStatusCompleted = 'animeStatusCompleted',
+
+	// 短文页面
+	diarySubtitle = 'diarySubtitle',
+	diaryCount = 'diaryCount',
+	diaryImage = 'diaryImage',
+	diaryReply = 'diaryReply',
+	diaryTips = 'diaryTips',
+	diaryMinutesAgo = 'diaryMinutesAgo',
+	diaryHoursAgo = 'diaryHoursAgo',
+	diaryDaysAgo = 'diaryDaysAgo',
+
+	// 404页面
+	notFound = 'notFound',
+	notFoundTitle = 'notFoundTitle',
+	notFoundDescription = 'notFoundDescription',
+	backToHome = 'backToHome',
 }
 
 export default I18nKey;

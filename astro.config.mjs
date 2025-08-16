@@ -38,10 +38,10 @@ export default defineConfig({
 			animationClass: "transition-swup-", // see https://swup.js.org/options/#animationselector
 			// the default value `transition-` cause transition delay
 			// when the Tailwind class `transition-all` is used
-			containers: ["main", "#toc"],
-			smoothScrolling: true,
+			containers: ["main"],
+			smoothScrolling: true, // 平滑滚动
 			cache: true,
-			preload: true,
+			preload: true, // 禁用预加载以减少网络请求
 			accessibility: true,
 			updateHead: true,
 			updateBodyClass: false,
@@ -53,6 +53,7 @@ export default defineConfig({
 				"fa6-brands": ["*"],
 				"fa6-regular": ["*"],
 				"fa6-solid": ["*"],
+				"mdi": ["*"],
 			},
 		}),
 		expressiveCode({
@@ -76,7 +77,8 @@ export default defineConfig({
 				borderRadius: "0.75rem",
 				borderColor: "none",
 				codeFontSize: "0.875rem",
-				codeFontFamily: "'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+				codeFontFamily:
+					"'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
 				codeLineHeight: "1.5rem",
 				frames: {
 					editorBackground: "var(--codeblock-bg)",
@@ -99,7 +101,7 @@ export default defineConfig({
 				showCopyToClipboardButton: false,
 			}
 		}),
-        svelte(),
+		svelte(),
 		sitemap(),
 	],
 	markdown: {

@@ -35,4 +35,30 @@ export const vi: Translation = {
 	[Key.author]: "Tác giả",
 	[Key.publishedAt]: "Đăng vào lúc",
 	[Key.license]: "Giấy phép bản quyền",
+	[Key.friends]: "Bạn bè",
+	[Key.anime]: "Anime",
+	[Key.diary]: "Khoảnh khắc",
+
+	// Thống kê anime
+	[Key.animeTotal]: "Tổng số",
+	[Key.animeWatching]: "Đang xem",
+	[Key.animeCompleted]: "Đã hoàn thành",
+	[Key.animeStatusWatching]: "Đang xem",
+	[Key.animeStatusCompleted]: "Đã hoàn thành",
+
+	// Trang nhật ký
+	[Key.diarySubtitle]: "Chia sẻ cuộc sống mọi lúc, mọi nơi",
+	[Key.diaryCount]: "bài viết",
+	[Key.diaryImage]: "Hình ảnh",
+	[Key.diaryReply]: "Trả lời",
+	[Key.diaryTips]: "Chỉ hiển thị 30 bài viết gần nhất",
+	[Key.diaryMinutesAgo]: "phút trước",
+	[Key.diaryHoursAgo]: "giờ trước",
+	[Key.diaryDaysAgo]: "ngày trước",
+
+	// Trang 404
+	[Key.notFound]: "404",
+	[Key.notFoundTitle]: "Không tìm thấy trang",
+	[Key.notFoundDescription]: "Xin lỗi, trang bạn đang tìm kiếm không tồn tại hoặc đã được di chuyển.",
+	[Key.backToHome]: "Về trang chủ",
 };
