@@ -2,14 +2,12 @@
 title: Include Video in the Posts
 published: 2023-08-01
 description: This post demonstrates how to include embedded video in a blog post.
-tags:
-  - Example
-  - 视频
+tags: [Example, Video]
 category: Examples
 draft: true
 ---
 
-只需从YouTube或其他平台复制嵌入代码，然后将其粘贴到Markdown文件中。
+Just copy the embed code from YouTube or other platforms, and paste it in the markdown file.
 
 ```yaml
 ---
