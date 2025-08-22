@@ -3,9 +3,8 @@ title: Markdown 扩展功能
 published: 2024-05-01
 updated: 2024-11-29
 description: 了解有关 Fuwari 中 Markdown 功能的更多信息
-image: ""
-tags:
-  - Example
+image: ''
+tags: [Example]
 category: Examples
 draft: true
 ---
