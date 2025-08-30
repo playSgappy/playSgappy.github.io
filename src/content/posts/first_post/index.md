@@ -3,7 +3,7 @@ title: 成功建站！
 published: 2025-08-03
 updated: 2025-08-03
 description: 成功地建立一个个人Blog网站
-image: ./cover.jpg
+image: 'https://tc.z.wiki/autoupload/f/b4J16iYsRRos2S7aLz8dvNiO_OyvX7mIgxFBfDMDErs/20250831/2eYf/1701X997/cover0803.jpg/webp'
 tags: [日志]
 category: '杂谈'
 draft: false
