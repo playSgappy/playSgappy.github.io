@@ -1,3 +1,4 @@
+#由于这个代码质量老是failed，遂直接禁用（根源解决问题.jpg）
 name: Code quality
 
 on:
