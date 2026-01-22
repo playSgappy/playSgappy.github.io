@@ -1,9 +1,9 @@
 ---
 title: 一封还未被送出的信
 published: 2026-01-22
-updated: ""
+updated: 2026-01-22
 description: 免责：内容不可信不可信不可信。
-image: ""
+image: ./cover.jpg
 tags: [恋爱, 情感]
 category: '日记'
 draft: false
