@@ -32,4 +32,8 @@
 - 图一乐搞各种东西😏
 - 主玩Minecraft，10年老玩家
 
-联系请致电astrivellee@qq.com
+## 联系方式
+
+邮箱：astrivellee@qq.com
+QQ群：[点击跳转](https://qm.qq.com/q/b32egztMl4)
+密钥：:spoiler[**2Gh9F5fSRT8irMR**]
