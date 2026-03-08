@@ -2,7 +2,7 @@
 title: 一封不会被送出的信
 published: 2026-01-22
 updated: 2026-01-22
-description: 免责：内容不可信不可信不可信。
+description: 免责：内容由AI生成，不是本人写的，不可信不可信不可信。
 image: ./cover.jpg
 tags: [恋爱, 情感]
 category: '日记'
