@@ -4,8 +4,6 @@
 
 ::github{repo="playSgappy/playSgappy.github.io"}
 
----
-
 > ### Sources of images used in this site
 > Avatar:[空色天絵/Flower Girl 01](https://www.pixiv.net/artworks/112951659)
 > 
@@ -21,8 +19,6 @@
 1. [Github](https://playsgappy.github.io/)
 2. [Netlify](https://sgappy.netlify.app/)
 
----
-
 ## 关于博主
 
 - 资深网络废物🗑️
@@ -35,5 +31,7 @@
 ## 联系方式
 
 邮箱：astrivellee@qq.com
+
 QQ群：[点击跳转](https://qm.qq.com/q/b32egztMl4)
+
 密钥：:spoiler[**2Gh9F5fSRT8irMR**]
