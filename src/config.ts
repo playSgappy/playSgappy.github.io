@@ -58,27 +58,18 @@ export const profileConfig: ProfileConfig = {
 	name: "playSgappy",
 	bio: "星星之所愿，点点泛成河。",
 	links: [
-		{
-			name: "Twitter",
-			icon: "fa6-brands:x-twitter", // Visit https://icones.js.org/ for icon codes
-			// You will need to install the corresponding icon set if it's not already included
-			// `pnpm add @iconify-json/<icon-set-name>`
-			url: "https://x.com",
-		},
-		{
-			name: "Steam",
-			icon: "fa6-brands:steam",
-			url: "https://store.steampowered.com",
-		},
+		// Visit https://icones.js.org/ for icon codes
+		// You will need to install the corresponding icon set if it's not already included
+		// `pnpm add @iconify-json/<icon-set-name>`
 		{
 			name: "GitHub",
 			icon: "fa6-brands:github",
 			url: "https://github.com/playSgappy/playSgappy.github.io",
 		},
 		{
-			name: "QQ",
+			name: "QQ群",
 			icon: "fa6-brands:qq",
-			url: "https://qm.qq.com/q/ZCBShWLgA4",
+			url: "https://qm.qq.com/q/b32egztMl4",
 		},
 	],
 };
