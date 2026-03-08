@@ -1,6 +1,7 @@
 ---
 title: 在Android设备上运行Minecraft服务器
 published: 2026-03-08
+update: 2026-03-08
 description: 拿起你的旧手机发挥它的余光！
 tags: [Android, Minecraft, 服务器]
 category: '教程'
@@ -21,8 +22,8 @@ draft: false
 :::
 
 :::note[注意]
-本教程以安装Minecraft Java版 1.21.11 Fabric服务器为例\
-安装其他版本需对应Java版本、其他服务器核心
+本教程以安装**Minecraft Java版 1.21.11 Fabric**服务器为例\
+如需安装其他版本需注意应下载的Java版本、服务器核心
 :::
 
 # 教程开始
@@ -39,7 +40,7 @@ pkg install openjdk-21 -y
 ```
 ## 下载服务端
 6. 执行以下代码 在内部储存创建服务器文件夹并下载服务端jar
-```
+```bash
 # 获取权限
 termux-setup-storage
 cd /sdcard
