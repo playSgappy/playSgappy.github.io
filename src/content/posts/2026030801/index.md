@@ -31,7 +31,7 @@ draft: false
 1. 首先点击[此处](https://github.com/hanxinhao000/ZeroTermux/releases/download/ZeroTermux-0.118.3.54/ZeroTermux-0.118.54-release_arm64-v8a.apk)下载并安装ZeroTermux
 2. 打开ZeroTermux，阅读并同意**协议**
 3. 按下**音量 +** 打开菜单
-4. 在常用功能中找到**切换源**，选择**清华源/北京源**，点击确定
+4. 在常用功能中找到**切换源**，选择**清华源/北京源**，点击**确定**
 ## 安装Java
 5. 执行以下代码 安装Java21
 ```bash
@@ -64,7 +64,7 @@ curl -o server.jar https://meta.fabricmc.net/v2/versions/loader/1.21.11/0.18.4/1
 之后对服务器进行文件操作也在这个文件夹内
 :::
 ## 启动服务器
-9. 回到ZeroTermux，重新输入`java -Xms2G -Xmx4G -jar server.jar --nogui`
+9. 回到ZeroTermux，重新输入`java -Xms2G -Xmx4G -jar server.jar --nogui`启动服务器
 
 10. 成功启动！
 
@@ -81,6 +81,15 @@ curl -o server.jar https://meta.fabricmc.net/v2/versions/loader/1.21.11/0.18.4/1
 # 遇到问题？
 加入[QQ群](https://playsgappy.github.io/about/#%E8%81%94%E7%B3%BB%E6%96%B9%E5%BC%8F)
 
+# 拓展
 ~~如何使用局域网加入？~~
 
 这个先咕咕咕↑
+
+更优的Java版服务器启动参数 [^1]：
+
+[^1]: 来自[旋律云](https://www.rhymc.com/knowledgebase/44/%E8%B0%83%E4%BC%98%E6%82%A8%E7%9A%84Java%E7%89%88%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%AF%E5%8A%A8%E5%8F%82%E6%95%B0%E5%90%8C%E6%A0%B7%E9%85%8D%E7%BD%AE%E6%9B%B4%E5%8A%A0%E6%B5%81%E7%95%85.html)
+
+```
+java -Xms10G -Xmx10G -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX :G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+ PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true -jar paperclip.jar nogui
+```
