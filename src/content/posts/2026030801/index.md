@@ -1,7 +1,7 @@
 ---
 title: 在Android设备上运行Minecraft服务器
 published: 2026-03-08
-update: 2026-03-08
+update: 2026-03-10
 description: 拿起你的旧手机发挥它的余光！
 tags: [Android, Minecraft, 服务器]
 category: '教程'
@@ -56,7 +56,7 @@ curl -o server.jar https://meta.fabricmc.net/v2/versions/loader/1.21.11/0.18.4/1
 
 7. 运行 server.jar\
 `java -jar server.jar`\
-等待运行完成
+等待运行完成，会要求同意eula
 
 8. 接着在文件管理中（内部储存）找到名为**mcserver**的文件夹，进入，编辑**eula.txt**，将eula=**flase**改为eula=**true**
 
@@ -64,7 +64,7 @@ curl -o server.jar https://meta.fabricmc.net/v2/versions/loader/1.21.11/0.18.4/1
 之后对服务器进行文件操作也在这个文件夹内
 :::
 ## 启动服务器
-9. 回到ZeroTermux，重新输入`java -jar server.jar`
+9. 回到ZeroTermux，重新输入`java -Xms2G -Xmx4G -jar server.jar --nogui`
 
 10. 成功启动！
 
@@ -75,8 +75,12 @@ curl -o server.jar https://meta.fabricmc.net/v2/versions/loader/1.21.11/0.18.4/1
 那么之后如何启动服务器呢？
 # 启动服务器的一般操作
 1. 打开ZeroTermux
-2. cd /storage/emulated/0/mcserver
-3. 输入`java -jar server.jar`即可启动服务器
+2. `cd /storage/emulated/0/mcserver`
+3. 输入`java -Xms2G -Xmx4G -jar server.jar --nogui`即可启动服务器
 
 # 遇到问题？
 加入[QQ群](https://playsgappy.github.io/about/#%E8%81%94%E7%B3%BB%E6%96%B9%E5%BC%8F)
+
+~~如何使用局域网加入？~~
+
+这个先咕咕咕↑
