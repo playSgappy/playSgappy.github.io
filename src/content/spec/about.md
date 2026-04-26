@@ -33,5 +33,3 @@
 邮箱：astrivellee@qq.com
 
 QQ群：[点击跳转](https://qm.qq.com/q/b32egztMl4)
-
-密钥：:spoiler[**2Gh9F5fSRT8irMR**]
