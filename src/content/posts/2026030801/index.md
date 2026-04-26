@@ -1,7 +1,7 @@
 ---
 title: 在Android设备上运行Minecraft服务器
 published: 2026-03-08
-update: 2026-03-10
+update: 2026-04-27
 description: 拿起你的旧手机发挥它的余光！
 tags: [Android, Minecraft, 服务器]
 category: '教程'
@@ -79,7 +79,7 @@ curl -o server.jar https://meta.fabricmc.net/v2/versions/loader/1.21.11/0.18.4/1
 3. 输入`java -Xms2G -Xmx4G -jar server.jar --nogui`即可启动服务器
 
 # 遇到问题？
-加入[QQ群](https://playsgappy.github.io/about/#%E8%81%94%E7%B3%BB%E6%96%B9%E5%BC%8F)
+加入[QQ群](https://qm.qq.com/q/b32egztMl4)
 
 # 拓展
 ~~如何使用局域网加入？~~
